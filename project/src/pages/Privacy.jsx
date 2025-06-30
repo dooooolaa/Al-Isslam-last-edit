@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 
 const Privacy = () => {
-  const lastUpdated = "15 ديسمبر 2024";
+  const lastUpdated = "1/7/2025";
 
   const dataTypes = [
     {
@@ -88,9 +88,9 @@ const Privacy = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 transition-colors duration-300">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-primary-600 to-islamic-700 text-white">
+      <div className="bg-gradient-to-r from-primary-600 to-islamic-700 dark:from-primary-900 dark:to-islamic-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
             <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -112,22 +112,22 @@ const Privacy = () => {
       {/* Introduction Section */}
       <div className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-8 transition-colors duration-300">
             <div className="flex items-start space-x-4 rtl:space-x-reverse mb-6">
-              <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Info className="text-primary-600" size={24} />
+              <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Info className="text-primary-600 dark:text-primary-300" size={24} />
               </div>
               <div>
-                <h2 className="text-2xl font-bold mb-4 text-gray-900 font-arabic">
+                <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100 font-arabic">
                   مقدمة
                 </h2>
-                <p className="text-gray-700 leading-relaxed font-arabic">
+                <p className="text-gray-700 dark:text-gray-200 leading-relaxed font-arabic">
                   في موقع "الإسلام حياة"، نعتبر خصوصيتك وأمان بياناتك من أهم أولوياتنا. 
                   هذه السياسة توضح كيفية جمع واستخدام وحماية معلوماتك الشخصية عند استخدام موقعنا.
                 </p>
               </div>
             </div>
-            <p className="text-gray-700 leading-relaxed font-arabic">
+            <p className="text-gray-700 dark:text-gray-200 leading-relaxed font-arabic">
               نحن نلتزم بالشفافية التامة في التعامل مع بياناتك، ونضمن لك أن جميع المعلومات 
               التي تشاركها معنا ستُستخدم فقط للأغراض المعلنة وبالطرق الآمنة.
             </p>
@@ -136,26 +136,26 @@ const Privacy = () => {
       </div>
 
       {/* Data Collection Section */}
-      <div className="py-16 bg-white">
+      <div className="py-16 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-gray-900 font-arabic">
+            <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-gray-100 font-arabic">
               البيانات التي نجمعها
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto font-arabic">
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-arabic">
               نجمع أنواع مختلفة من البيانات لتحسين خدماتنا وتجربتك على الموقع
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {dataTypes.map((type, index) => (
-              <div key={index} className="bg-gray-50 rounded-xl p-6">
+              <div key={index} className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 transition-colors duration-300">
                 <div className="flex items-center space-x-3 rtl:space-x-reverse mb-4">
                   {type.icon}
-                  <h3 className="text-xl font-semibold text-gray-900 font-arabic">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 font-arabic">
                     {type.title}
                   </h3>
                 </div>
-                <p className="text-gray-600 leading-relaxed font-arabic">
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-arabic">
                   {type.description}
                 </p>
               </div>
@@ -168,23 +168,23 @@ const Privacy = () => {
       <div className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-gray-900 font-arabic">
+            <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-gray-100 font-arabic">
               كيفية استخدام البيانات
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto font-arabic">
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-arabic">
               نستخدم بياناتك فقط للأغراض المشروعة والمعلنة مسبقاً
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {dataUsage.map((usage, index) => (
-              <div key={index} className="bg-white rounded-xl p-6 shadow-lg">
+              <div key={index} className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg transition-colors duration-300">
                 <div className="flex items-center space-x-3 rtl:space-x-reverse mb-4">
                   {usage.icon}
-                  <h3 className="text-xl font-semibold text-gray-900 font-arabic">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 font-arabic">
                     {usage.title}
                   </h3>
                 </div>
-                <p className="text-gray-600 leading-relaxed font-arabic">
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-arabic">
                   {usage.description}
                 </p>
               </div>
@@ -194,23 +194,23 @@ const Privacy = () => {
       </div>
 
       {/* Data Protection Section */}
-      <div className="py-16 bg-white">
+      <div className="py-16 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-primary-50 to-islamic-50 rounded-2xl p-8">
+          <div className="bg-gradient-to-r from-primary-50 to-islamic-50 dark:from-primary-900 dark:to-islamic-900 rounded-2xl p-8 transition-colors duration-300">
             <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Lock className="text-primary-600" size={32} />
+              <div className="w-16 h-16 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Lock className="text-primary-600 dark:text-primary-300" size={32} />
               </div>
-              <h2 className="text-3xl font-bold mb-4 text-gray-900 font-arabic">
+              <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-gray-100 font-arabic">
                 حماية البيانات
               </h2>
             </div>
             <div className="space-y-6">
-              <div className="bg-white rounded-xl p-6">
-                <h3 className="text-xl font-semibold mb-3 text-gray-900 font-arabic">
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 transition-colors duration-300">
+                <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 font-arabic">
                   إجراءات الأمان
                 </h3>
-                <ul className="space-y-2 text-gray-700 font-arabic">
+                <ul className="space-y-2 text-gray-700 dark:text-gray-200 font-arabic">
                   <li className="flex items-start space-x-2 rtl:space-x-reverse">
                     <CheckCircle className="text-green-500 mt-1 flex-shrink-0" size={16} />
                     <span>تشفير البيانات باستخدام تقنيات SSL المتقدمة</span>
@@ -229,19 +229,10 @@ const Privacy = () => {
                   </li>
                 </ul>
               </div>
-              <div className="bg-white rounded-xl p-6">
-                <h3 className="text-xl font-semibold mb-3 text-gray-900 font-arabic">
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 transition-colors duration-300">
+                <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 font-arabic">
                   عدم مشاركة البيانات
                 </h3>
-                <p className="text-gray-700 leading-relaxed font-arabic">
-                  نحن لا نبيع أو نؤجر أو نشارك بياناتك الشخصية مع أي طرف ثالث 
-                  إلا في الحالات التالية:
-                </p>
-                <ul className="mt-3 space-y-2 text-gray-700 font-arabic">
-                  <li>• عند الحصول على موافقتك الصريحة</li>
-                  <li>• عند الحاجة القانونية أو القضائية</li>
-                  <li>• لحماية حقوقنا أو حقوق المستخدمين الآخرين</li>
-                </ul>
               </div>
             </div>
           </div>
@@ -252,23 +243,23 @@ const Privacy = () => {
       <div className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-gray-900 font-arabic">
+            <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-gray-100 font-arabic">
               حقوقك كمتخدم
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto font-arabic">
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-arabic">
               لديك حقوق محددة فيما يتعلق ببياناتك الشخصية
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {userRights.map((right, index) => (
-              <div key={index} className="bg-white rounded-xl p-6 shadow-lg">
+              <div key={index} className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg transition-colors duration-300">
                 <div className="flex items-center space-x-3 rtl:space-x-reverse mb-4">
                   {right.icon}
-                  <h3 className="text-xl font-semibold text-gray-900 font-arabic">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 font-arabic">
                     {right.title}
                   </h3>
                 </div>
-                <p className="text-gray-600 leading-relaxed font-arabic">
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-arabic">
                   {right.description}
                 </p>
               </div>
@@ -277,34 +268,8 @@ const Privacy = () => {
         </div>
       </div>
 
-      {/* Cookies Section */}
-      <div className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gray-50 rounded-2xl p-8">
-            <h2 className="text-3xl font-bold mb-6 text-gray-900 text-center font-arabic">
-              ملفات تعريف الارتباط (Cookies)
-            </h2>
-            <div className="space-y-6 text-gray-700 font-arabic">
-              <p>
-                نستخدم ملفات تعريف الارتباط لتحسين تجربتك على موقعنا. هذه الملفات تساعدنا في:
-              </p>
-              <ul className="space-y-2">
-                <li>• تذكر تفضيلاتك وإعداداتك</li>
-                <li>• تحليل حركة المرور واستخدام الموقع</li>
-                <li>• توفير محتوى مخصص لك</li>
-                <li>• تحسين أداء الموقع</li>
-              </ul>
-              <p>
-                يمكنك التحكم في ملفات تعريف الارتباط من خلال إعدادات متصفحك، 
-                ولكن قد يؤثر ذلك على بعض وظائف الموقع.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Contact Section */}
-      <div className="py-16 bg-gradient-to-r from-primary-600 to-islamic-700">
+      <div className="py-16 bg-gradient-to-r from-primary-600 to-islamic-700 dark:from-primary-900 dark:to-islamic-900 transition-colors duration-300">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4 text-white font-arabic">
             لديك أسئلة حول الخصوصية؟
@@ -332,19 +297,19 @@ const Privacy = () => {
       {/* Updates Section */}
       <div className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-8">
+          <div className="bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-800 rounded-2xl p-8 transition-colors duration-300">
             <div className="flex items-start space-x-4 rtl:space-x-reverse">
-              <AlertTriangle className="text-yellow-600 mt-1 flex-shrink-0" size={24} />
+              <AlertTriangle className="text-yellow-600 dark:text-yellow-300 mt-1 flex-shrink-0" size={24} />
               <div>
-                <h3 className="text-xl font-semibold mb-3 text-gray-900 font-arabic">
+                <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 font-arabic">
                   تحديثات السياسة
                 </h3>
-                <p className="text-gray-700 leading-relaxed font-arabic">
+                <p className="text-gray-700 dark:text-gray-200 leading-relaxed font-arabic">
                   قد نقوم بتحديث هذه السياسة من وقت لآخر. سنقوم بإشعارك بأي تغييرات جوهرية 
                   عبر البريد الإلكتروني أو من خلال إشعار على الموقع. ننصحك بمراجعة هذه الصفحة 
                   بانتظام للاطلاع على أحدث المعلومات.
                 </p>
-                <p className="text-gray-600 mt-4 font-arabic">
+                <p className="text-gray-600 dark:text-gray-300 mt-4 font-arabic">
                   آخر تحديث: {lastUpdated}
                 </p>
               </div>

@@ -1,370 +1,179 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { 
-  FileText, 
-  Shield, 
-  AlertTriangle, 
-  CheckCircle, 
-  XCircle,
-  Info,
-  User,
-  Lock,
-  Globe,
-  Calendar,
-  Mail,
-  Phone
-} from 'lucide-react';
+import { FileText, User, BookOpen, Lock, Shield, Globe, Mail, Edit, Ban, CheckCircle } from 'lucide-react';
+
+const gradients = [
+  'from-primary-100 to-primary-50 dark:from-primary-900 dark:to-primary-800',
+  'from-islamic-100 to-islamic-50 dark:from-islamic-900 dark:to-islamic-800',
+  'from-gold-100 to-gold-50 dark:from-gold-900 dark:to-gold-800',
+  'from-red-100 to-red-50 dark:from-red-900 dark:to-red-800',
+  'from-primary-100 to-gold-50 dark:from-primary-900 dark:to-gold-900',
+  'from-islamic-100 to-primary-50 dark:from-islamic-900 dark:to-primary-900',
+  'from-gold-100 to-islamic-50 dark:from-gold-900 dark:to-islamic-900',
+  'from-primary-100 to-red-50 dark:from-primary-900 dark:to-red-900',
+  'from-islamic-100 to-gold-50 dark:from-islamic-900 dark:to-gold-900',
+];
+const iconGradients = [
+  'from-primary-500 to-primary-400 dark:from-primary-700 dark:to-primary-500',
+  'from-islamic-500 to-islamic-400 dark:from-islamic-700 dark:to-islamic-500',
+  'from-gold-500 to-gold-400 dark:from-gold-700 dark:to-gold-500',
+  'from-red-500 to-red-400 dark:from-red-700 dark:to-red-500',
+  'from-primary-500 to-gold-400 dark:from-primary-700 dark:to-gold-700',
+  'from-islamic-500 to-primary-400 dark:from-islamic-700 dark:to-primary-700',
+  'from-gold-500 to-islamic-400 dark:from-gold-700 dark:to-islamic-700',
+  'from-primary-500 to-red-400 dark:from-primary-700 dark:to-red-700',
+  'from-islamic-500 to-gold-400 dark:from-islamic-700 dark:to-gold-700',
+];
+
+const terms = [
+  {
+    icon: <CheckCircle size={24} />, title: 'القبول بالشروط', emoji: '📌',
+    content: (
+      <>
+        <p>باستخدامك لموقع "الإسلام حياة" أو أي من خدماته، فإنك تقر بأنك قرأت هذه الشروط وفهمتها وتوافق عليها بالكامل.</p>
+        <p className="mt-2">إذا كنت لا توافق على أي جزء من هذه الشروط، يُرجى عدم استخدام الموقع.</p>
+      </>
+    )
+  },
+  {
+    icon: <BookOpen size={24} />, title: 'محتوى الموقع', emoji: '🧾',
+    content: (
+      <>
+        <p>جميع المواد المنشورة (نصوص، صور، صوتيات، فيديوهات، تطبيقات) مقدمة لأغراض دينية وتعليمية فقط.</p>
+        <div className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+          <span className="font-bold">المصادر الشرعية:</span>
+          <ul className="list-disc pr-6 mt-1">
+            <li>dorar.net</li>
+            <li>islamqa.info</li>
+            <li>binbaz.org.sa</li>
+            <li>mp3quran.net</li>
+          </ul>
+        </div>
+        <p className="mt-2">لا يُقصد بالمحتوى أن يكون بديلًا عن الفتوى الشرعية الخاصة لحالات معينة، وينبغي دائمًا الرجوع لأهل العلم.</p>
+      </>
+    )
+  },
+  {
+    icon: <User size={24} />, title: 'الحسابات والاستخدام الشخصي', emoji: '👤',
+    content: (
+      <>
+        <ul className="list-disc pr-6">
+          <li>يمكنك إنشاء حساب شخصي لحفظ المفضلة وتتبع نشاطك في التلاوة والتحديات.</li>
+          <li>يجب الحفاظ على سرية بيانات الدخول الخاصة بك.</li>
+          <li>لا يُسمح باستخدام حسابك لأي غرض تجاري أو غير مشروع.</li>
+          <li>يحق لإدارة الموقع إغلاق أو تعليق الحسابات التي تسيء الاستخدام أو تخل بالشروط.</li>
+        </ul>
+      </>
+    )
+  },
+  {
+    icon: <Shield size={24} />, title: 'الخصوصية وحماية البيانات', emoji: '🛡️',
+    content: (
+      <>
+        <ul className="list-disc pr-6">
+          <li>نحترم خصوصيتك. نستخدم معلوماتك فقط لتحسين تجربتك داخل الموقع.</li>
+          <li>لا نبيع أو نشارك بياناتك مع أي طرف ثالث.</li>
+          <li>للمزيد، يمكنك مراجعة سياسة الخصوصية الخاصة بنا.</li>
+        </ul>
+      </>
+    )
+  },
+  {
+    icon: <Lock size={24} />, title: 'حقوق النشر', emoji: '🔒',
+    content: (
+      <>
+        <ul className="list-disc pr-6">
+          <li>جميع الحقوق محفوظة لموقع "الإسلام حياة".</li>
+          <li>لا يُسمح بإعادة نشر أو نسخ أو اقتباس أي جزء من الموقع دون إذن مكتوب، إلا لأغراض غير ربحية مع ذكر المصدر.</li>
+        </ul>
+      </>
+    )
+  },
+  {
+    icon: <Ban size={24} />, title: 'الاستخدامات المحظورة', emoji: '🚫',
+    content: (
+      <>
+        <ul className="list-disc pr-6">
+          <li>يُمنع استخدام الموقع في أي من الحالات التالية:</li>
+          <li>نشر أو إرسال أي محتوى فيه إساءة، كراهية، أو تحريض.</li>
+          <li>التلاعب في الخدمات أو محاولة الوصول غير المشروع لبيانات غيرك.</li>
+          <li>استغلال المنصة في نشر روابط غير موثوقة أو إعلانات خارجية.</li>
+        </ul>
+      </>
+    )
+  },
+  {
+    icon: <Mail size={24} />, title: 'التواصل والدعم', emoji: '📬',
+    content: (
+      <>
+        <ul className="list-disc pr-6">
+          <li>لأي استفسار أو بلاغ عن محتوى غير مناسب، يمكنك التواصل معنا من خلال صفحة <a href="/contact" className="text-primary-600 dark:text-primary-300 underline">تواصل معنا</a>.</li>
+          <li>نرحب بأي اقتراح أو ملاحظة تساعدنا على تحسين الموقع.</li>
+        </ul>
+      </>
+    )
+  },
+  {
+    icon: <Edit size={24} />, title: 'تعديل الشروط', emoji: '⚖️',
+    content: (
+      <>
+        <ul className="list-disc pr-6">
+          <li>يحق لإدارة الموقع تعديل هذه الشروط في أي وقت. سيتم إعلام المستخدمين بأي تغييرات هامة.</li>
+          <li>استمرارك في استخدام الموقع بعد التحديث يعني موافقتك على الشروط الجديدة.</li>
+        </ul>
+      </>
+    )
+  },
+  {
+    icon: <Globe size={24} />, title: 'الختام', emoji: '🕊️',
+    content: (
+      <>
+        <ul className="list-disc pr-6">
+          <li>نسعى لتوفير بيئة آمنة وهادفة لكل من يستخدم "الإسلام حياة".</li>
+          <li>شكرًا لاختيارك لنا، ونسأل الله أن يجعل الموقع نافعًا مباركًا للجميع.</li>
+        </ul>
+      </>
+    )
+  },
+];
 
 const Terms = () => {
-  const lastUpdated = "15 ديسمبر 2024";
-
-  const generalTerms = [
-    {
-      icon: <User className="text-primary-400" size={20} />,
-      title: 'التسجيل والحساب',
-      description: 'يجب أن تكون عمرك 13 عاماً أو أكثر لإنشاء حساب. أنت مسؤول عن الحفاظ على سرية معلومات تسجيل الدخول.'
-    },
-    {
-      icon: <Globe className="text-blue-400" size={20} />,
-      title: 'الاستخدام المقبول',
-      description: 'يجب استخدام الموقع لأغراض مشروعة ومتوافقة مع القيم الإسلامية. يحظر أي استخدام يسيء للدين أو للآخرين.'
-    },
-    {
-      icon: <Shield className="text-green-400" size={20} />,
-      title: 'المحتوى المقدم',
-      description: 'أنت مسؤول عن المحتوى الذي تشاركه. يجب أن يكون المحتوى دقيقاً ومحترماً ومتوافقاً مع الشريعة الإسلامية.'
-    },
-    {
-      icon: <Lock className="text-purple-400" size={20} />,
-      title: 'الأمان والخصوصية',
-      description: 'نلتزم بحماية خصوصيتك وأمان بياناتك. يجب عليك أيضاً اتخاذ الاحتياطات اللازمة لحماية حسابك.'
-    }
-  ];
-
-  const prohibitedActivities = [
-    {
-      icon: <XCircle className="text-red-500" size={20} />,
-      title: 'المحتوى المسيء',
-      description: 'نشر محتوى مسيء أو مهين أو يتعارض مع القيم الإسلامية'
-    },
-    {
-      icon: <XCircle className="text-red-500" size={20} />,
-      title: 'الأنشطة غير القانونية',
-      description: 'استخدام الموقع لأي أنشطة غير قانونية أو ضارة'
-    },
-    {
-      icon: <XCircle className="text-red-500" size={20} />,
-      title: 'انتهاك حقوق الملكية',
-      description: 'نشر محتوى ينتهك حقوق الملكية الفكرية للآخرين'
-    },
-    {
-      icon: <XCircle className="text-red-500" size={20} />,
-      title: 'إساءة استخدام النظام',
-      description: 'محاولة اختراق الموقع أو إعاقة عمله أو إرسال برامج ضارة'
-    }
-  ];
-
-  const userObligations = [
-    {
-      icon: <CheckCircle className="text-green-500" size={20} />,
-      title: 'احترام القيم الإسلامية',
-      description: 'الالتزام بالقيم والأخلاق الإسلامية في جميع التفاعلات'
-    },
-    {
-      icon: <CheckCircle className="text-green-500" size={20} />,
-      title: 'دقة المعلومات',
-      description: 'تقديم معلومات دقيقة وصحيحة عند التسجيل والتفاعل'
-    },
-    {
-      icon: <CheckCircle className="text-green-500" size={20} />,
-      title: 'حماية الحساب',
-      description: 'الحفاظ على أمان حسابك وعدم مشاركة بيانات تسجيل الدخول'
-    },
-    {
-      icon: <CheckCircle className="text-green-500" size={20} />,
-      title: 'الامتثال للقوانين',
-      description: 'الالتزام بجميع القوانين واللوائح المعمول بها'
-    }
-  ];
-
-  const intellectualProperty = [
-    {
-      title: 'حقوق الملكية',
-      description: 'جميع المحتويات والتصاميم والبرمجيات في الموقع مملوكة لنا أو مرخصة لنا.'
-    },
-    {
-      title: 'المحتوى المقدم من المستخدمين',
-      description: 'يحتفظ المستخدم بحقوق الملكية على المحتوى الذي يقدمه، مع منحنا ترخيصاً لاستخدامه.'
-    },
-    {
-      title: 'الاستخدام المسموح',
-      description: 'يمكن استخدام المحتوى للاستخدام الشخصي والتعليمي، مع الحفاظ على حقوق الملكية.'
-    },
-    {
-      title: 'الاستخدام المحظور',
-      description: 'يحظر نسخ أو توزيع أو تعديل المحتوى لأغراض تجارية دون إذن مسبق.'
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-primary-600 to-islamic-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center">
-            <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
-              <FileText className="text-white" size={40} />
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 font-arabic">
-              شروط الاستخدام
-            </h1>
-            <p className="text-xl text-gray-100 max-w-3xl mx-auto leading-relaxed font-arabic">
-              يرجى قراءة هذه الشروط بعناية قبل استخدام موقع "الإسلام حياة". استخدامك للموقع يعني موافقتك على هذه الشروط
-            </p>
-            <div className="mt-6 text-sm text-gray-200 font-arabic">
-              آخر تحديث: {lastUpdated}
-            </div>
+    <div className="min-h-screen bg-gradient-to-br dark:via-gray-700 dark:to-gray-900 py-0 sm:py-8 transition-colors duration-300">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-primary-600 to-islamic-700 dark:from-primary-900 dark:to-islamic-900 text-white rounded-b-3xl shadow-lg mb-10 transition-colors duration-300">
+        <div className="max-w-2xl mx-auto px-4 py-10 flex flex-col items-center">
+          <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mb-4">
+            <FileText className="text-white" size={44} />
           </div>
+          <h1 className="text-3xl sm:text-4xl font-bold font-arabic mb-2 flex items-center gap-2">
+            <span role="img" aria-label="شروط الاستخدام">📄</span> شروط الاستخدام
+          </h1>
+          <div className="text-base text-gold-200 font-arabic">آخر تحديث: 01 يوليو 2025</div>
         </div>
       </div>
-
-      {/* Introduction Section */}
-      <div className="py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <div className="flex items-start space-x-4 rtl:space-x-reverse mb-6">
-              <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Info className="text-primary-600" size={24} />
+      {/* Terms Cards */}
+      <div className="max-w-7xl mx-auto w-full px-2 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {terms.map((term, idx) => (
+          <div
+            key={idx}
+            className={`rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-gray-800 bg-gradient-to-br ${gradients[idx % gradients.length]} transition-all duration-300`}
+          >
+            <div className="flex items-start gap-4">
+              <div className={`flex-shrink-0 w-14 h-14 rounded-full flex items-center justify-center shadow-lg border-2 border-white dark:border-gray-900 bg-gradient-to-br ${iconGradients[idx % iconGradients.length]}`}> 
+                {term.icon}
               </div>
               <div>
-                <h2 className="text-2xl font-bold mb-4 text-gray-900 font-arabic">
-                  مقدمة
-                </h2>
-                <p className="text-gray-700 leading-relaxed font-arabic">
-                  مرحباً بك في موقع "الإسلام حياة". هذه الشروط والأحكام تحكم استخدامك لموقعنا الإلكتروني 
-                  وجميع الخدمات المقدمة من خلاله. باستخدامك للموقع، فإنك توافق على الالتزام بهذه الشروط.
-                </p>
-              </div>
-            </div>
-            <p className="text-gray-700 leading-relaxed font-arabic">
-              نحن نحتفظ بالحق في تعديل هذه الشروط في أي وقت. سيتم إشعارك بأي تغييرات جوهرية 
-              عبر البريد الإلكتروني أو من خلال إشعار على الموقع.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* General Terms Section */}
-      <div className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-gray-900 font-arabic">
-              الشروط العامة
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto font-arabic">
-              الشروط الأساسية التي يجب الالتزام بها عند استخدام الموقع
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {generalTerms.map((term, index) => (
-              <div key={index} className="bg-gray-50 rounded-xl p-6">
-                <div className="flex items-center space-x-3 rtl:space-x-reverse mb-4">
-                  {term.icon}
-                  <h3 className="text-xl font-semibold text-gray-900 font-arabic">
-                    {term.title}
-                  </h3>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-2xl">{term.emoji}</span>
+                  <span className="text-lg font-bold text-primary-700 dark:text-primary-200 font-arabic">{term.title}</span>
                 </div>
-                <p className="text-gray-600 leading-relaxed font-arabic">
-                  {term.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Prohibited Activities Section */}
-      <div className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-gray-900 font-arabic">
-              الأنشطة المحظورة
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto font-arabic">
-              الأنشطة التي يحظر القيام بها على الموقع
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {prohibitedActivities.map((activity, index) => (
-              <div key={index} className="bg-red-50 border border-red-200 rounded-xl p-6">
-                <div className="flex items-center space-x-3 rtl:space-x-reverse mb-4">
-                  {activity.icon}
-                  <h3 className="text-xl font-semibold text-gray-900 font-arabic">
-                    {activity.title}
-                  </h3>
+                <div className="text-gray-800 dark:text-gray-100 font-arabic text-base leading-relaxed">
+                  {term.content}
                 </div>
-                <p className="text-gray-600 leading-relaxed font-arabic">
-                  {activity.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* User Obligations Section */}
-      <div className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-gray-900 font-arabic">
-              التزامات المستخدم
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto font-arabic">
-              المسؤوليات والالتزامات المطلوبة من المستخدمين
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {userObligations.map((obligation, index) => (
-              <div key={index} className="bg-green-50 border border-green-200 rounded-xl p-6">
-                <div className="flex items-center space-x-3 rtl:space-x-reverse mb-4">
-                  {obligation.icon}
-                  <h3 className="text-xl font-semibold text-gray-900 font-arabic">
-                    {obligation.title}
-                  </h3>
-                </div>
-                <p className="text-gray-600 leading-relaxed font-arabic">
-                  {obligation.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Intellectual Property Section */}
-      <div className="py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-primary-50 to-islamic-50 rounded-2xl p-8">
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FileText className="text-primary-600" size={32} />
-              </div>
-              <h2 className="text-3xl font-bold mb-4 text-gray-900 font-arabic">
-                حقوق الملكية الفكرية
-              </h2>
-            </div>
-            <div className="space-y-6">
-              {intellectualProperty.map((item, index) => (
-                <div key={index} className="bg-white rounded-xl p-6">
-                  <h3 className="text-xl font-semibold mb-3 text-gray-900 font-arabic">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed font-arabic">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Limitation of Liability Section */}
-      <div className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-8">
-            <div className="flex items-start space-x-4 rtl:space-x-reverse">
-              <AlertTriangle className="text-yellow-600 mt-1 flex-shrink-0" size={24} />
-              <div>
-                <h3 className="text-xl font-semibold mb-3 text-gray-900 font-arabic">
-                  حدود المسؤولية
-                </h3>
-                <p className="text-gray-700 leading-relaxed font-arabic">
-                  لا نتحمل المسؤولية عن أي أضرار مباشرة أو غير مباشرة تنشأ عن استخدام الموقع. 
-                  نحن نقدم المحتوى "كما هو" دون ضمانات صريحة أو ضمنية.
-                </p>
-                <p className="text-gray-700 leading-relaxed mt-4 font-arabic">
-                  نحن لا نضمن أن الموقع سيكون متاحاً دائماً أو خالياً من الأخطاء، 
-                  ولا نتحمل المسؤولية عن أي انقطاع في الخدمة أو فقدان للبيانات.
-                </p>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Termination Section */}
-      <div className="py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-red-50 border border-red-200 rounded-2xl p-8">
-            <h2 className="text-3xl font-bold mb-6 text-gray-900 text-center font-arabic">
-              إنهاء الخدمة
-            </h2>
-            <div className="space-y-4 text-gray-700 font-arabic">
-              <p>
-                نحتفظ بالحق في إنهاء أو تعليق حسابك في أي وقت للأسباب التالية:
-              </p>
-              <ul className="space-y-2">
-                <li>• انتهاك شروط الاستخدام</li>
-                <li>• السلوك المسيء أو الضار</li>
-                <li>• عدم النشاط لفترة طويلة</li>
-                <li>• طلب منك إنهاء الحساب</li>
-              </ul>
-              <p>
-                عند إنهاء الحساب، قد يتم حذف جميع البيانات المرتبطة به نهائياً.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Contact Section */}
-      <div className="py-16 bg-gradient-to-r from-primary-600 to-islamic-700">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4 text-white font-arabic">
-            لديك أسئلة حول الشروط؟
-          </h2>
-          <p className="text-xl text-gray-100 mb-8 font-arabic">
-            نحن هنا للإجابة على جميع استفساراتك حول شروط الاستخدام
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="mailto:mohamedadelabdullah7@gmail.com"
-              className="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200 font-arabic"
-            >
-              راسلنا عبر البريد الإلكتروني
-            </a>
-            <a
-              href="tel:01144509350"
-              className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-colors duration-200 font-arabic"
-            >
-              اتصل بنا
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Updates Section */}
-      <div className="py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-blue-50 border border-blue-200 rounded-2xl p-8">
-            <div className="flex items-start space-x-4 rtl:space-x-reverse">
-              <Info className="text-blue-600 mt-1 flex-shrink-0" size={24} />
-              <div>
-                <h3 className="text-xl font-semibold mb-3 text-gray-900 font-arabic">
-                  تحديثات الشروط
-                </h3>
-                <p className="text-gray-700 leading-relaxed font-arabic">
-                  قد نقوم بتحديث هذه الشروط من وقت لآخر لتحسين خدماتنا أو لمواكبة التغييرات القانونية. 
-                  سنقوم بإشعارك بأي تغييرات جوهرية عبر البريد الإلكتروني أو من خلال إشعار على الموقع.
-                </p>
-                <p className="text-gray-600 mt-4 font-arabic">
-                  آخر تحديث: {lastUpdated}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

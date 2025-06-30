@@ -14,6 +14,13 @@ const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [passwordChecks, setPasswordChecks] = useState({
+    length: false,
+    upper: false,
+    lower: false,
+    number: false,
+    special: false
+  });
   
   const { signup, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
@@ -35,8 +42,19 @@ const Register = () => {
       return;
     }
 
-    if (formData.password.length < 6) {
-      setError('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+    // تحقق قوي من كلمة المرور
+    const password = formData.password;
+    const checks = {
+      length: password.length >= 8,
+      upper: /[A-Z]/.test(password),
+      lower: /[a-z]/.test(password),
+      number: /[0-9]/.test(password),
+      special: /[^A-Za-z0-9]/.test(password)
+    };
+    setPasswordChecks(checks);
+    const allValid = Object.values(checks).every(Boolean);
+    if (!allValid) {
+      setError('كلمة المرور لا تحقق جميع الشروط');
       return;
     }
 
@@ -46,7 +64,16 @@ const Register = () => {
       await signup(formData.email, formData.password, formData.name);
       navigate('/');
     } catch (error) {
-      setError('خطأ في إنشاء الحساب. تأكد من صحة البيانات');
+      // ترجم بعض أشهر رسائل الأخطاء
+      let msg = 'حدث خطأ غير متوقع. حاول مرة أخرى.';
+      if (error.code === 'auth/email-already-in-use') {
+        msg = 'البريد الإلكتروني مستخدم بالفعل.';
+      } else if (error.code === 'auth/invalid-email') {
+        msg = 'البريد الإلكتروني غير صالح.';
+      } else if (error.code === 'auth/weak-password') {
+        msg = 'كلمة المرور ضعيفة جداً.';
+      }
+      setError(msg);
     }
     
     setLoading(false);
@@ -82,10 +109,37 @@ const Register = () => {
         </div>
 
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
-          {error && (
+          {(error && error !== 'كلمة المرور لا تحقق جميع الشروط') && (
             <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center space-x-3 rtl:space-x-reverse">
               <AlertCircle className="text-red-500" size={20} />
               <span className="text-red-700 dark:text-red-300 font-arabic">{error}</span>
+            </div>
+          )}
+
+          {/* شروط كلمة المرور */}
+          {error === 'كلمة المرور لا تحقق جميع الشروط' && (
+            <div className="mb-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+              <div className="mb-2 text-red-700 dark:text-red-300 font-bold font-arabic flex items-center gap-2">
+                <AlertCircle className="text-red-500" size={20} />
+                يجب أن تحقق كلمة المرور جميع الشروط التالية:
+              </div>
+              <ul className="list-disc pr-6 space-y-1 text-sm font-arabic">
+                <li className={passwordChecks.length ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}>
+                  {passwordChecks.length ? '✔' : '✖'} 8 أحرف أو أكثر
+                </li>
+                <li className={passwordChecks.upper ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}>
+                  {passwordChecks.upper ? '✔' : '✖'} حرف كبير (A-Z) واحد على الأقل
+                </li>
+                <li className={passwordChecks.lower ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}>
+                  {passwordChecks.lower ? '✔' : '✖'} حرف صغير (a-z) واحد على الأقل
+                </li>
+                <li className={passwordChecks.number ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}>
+                  {passwordChecks.number ? '✔' : '✖'} رقم واحد على الأقل
+                </li>
+                <li className={passwordChecks.special ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}>
+                  {passwordChecks.special ? '✔' : '✖'} رمز خاص واحد على الأقل (مثل !@#$%)
+                </li>
+              </ul>
             </div>
           )}
 

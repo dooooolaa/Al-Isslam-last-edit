@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AppRoutes from './routes/AppRoutes';
 import { ArrowRight } from 'lucide-react';
+import { ChallengeProvider } from '../../src/context/ChallengeContext';
 
 function BackButton() {
   const location = useLocation();
@@ -29,16 +30,18 @@ function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <Router>
-          <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300" dir="rtl">
-            <Navbar />
-            <BackButton />
-            <main>
-              <AppRoutes />
-            </main>
-            <Footer />
-          </div>
-        </Router>
+        <ChallengeProvider>
+          <Router>
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300" dir="rtl">
+              <Navbar />
+              <BackButton />
+              <main>
+                <AppRoutes />
+              </main>
+              <Footer />
+            </div>
+          </Router>
+        </ChallengeProvider>
       </AuthProvider>
     </ThemeProvider>
   );

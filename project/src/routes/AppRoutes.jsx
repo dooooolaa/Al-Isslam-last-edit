@@ -47,6 +47,11 @@ import About from '../pages/About';
 import Contact from '../pages/Contact';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
+import ChallengeDashboard from '../../../src/challenges/ChallengeDashboard';
+import WeeklyChallenges from '../../../src/challenges/WeeklyChallenges';
+import MemorizationTracker from '../../../src/challenges/MemorizationTracker';
+import TafsirQuests from '../../../src/challenges/TafsirQuests';
+import ChallengeHistory from '../../../src/challenges/ChallengeHistory';
 
 const AppRoutes = () => {
   return (
@@ -81,7 +86,11 @@ const AppRoutes = () => {
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/terms" element={<Terms />} />
       {/* Placeholder routes - سيتم تطويرها لاحقاً */}
-      <Route path="/challenges" element={<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center"><h1 className="text-2xl font-bold text-gray-900 dark:text-white font-arabic">قريباً - التحديات القرآنية</h1></div>} />
+      <Route path="/challenges" element={<ChallengeDashboard />} />
+      <Route path="/challenges/weekly" element={<WeeklyChallenges />} />
+      <Route path="/challenges/memorization" element={<MemorizationTracker />} />
+      <Route path="/challenges/tafsir" element={<TafsirQuests />} />
+      <Route path="/challenges/history" element={<ChallengeHistory />} />
       <Route path="/family" element={<FamilyIndex />} />
       <Route path="/family/life" element={<FamilyLife />} />
       <Route path="/family/parenting" element={<ParentingGuide />} />
