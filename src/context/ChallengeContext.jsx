@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 export const ChallengeContext = createContext();
 
@@ -138,10 +138,10 @@ export const ChallengeProvider = ({ children }) => {
   // الحالة الرئيسية
   const [currentChallenge, setCurrentChallenge] = useState({ title: 'تلاوة: البقرة 1-20', endTime: new Date(Date.now() + 12 * 60 * 60 * 1000) });
   const [progress, setProgress] = useState(40);
-  const [points, setPoints] = useState(100);
-  const [rank, setRank] = useState(3);
+  const [points, setPoints] = useState(0);
+  const [rank, setRank] = useState(0);
   const [canPostpone, setCanPostpone] = useState(true);
-  const [leaderboard, setLeaderboard] = useState(mockLeaderboard);
+  const [leaderboard, setLeaderboard] = useState(mockLeaderboard.map(u => ({...u, points: 0})));
   const [selectedLevel, setSelectedLevel] = useState('beginner');
   const [weeklyChallenges, setWeeklyChallenges] = useState(weeklyChallengesByLevel['beginner']);
   const [memorizationPlan, setMemorizationPlan] = useState({ name: 'جزء عم' });
@@ -156,6 +156,27 @@ export const ChallengeProvider = ({ children }) => {
   const [history, setHistory] = useState(mockHistory);
   const [badges, setBadges] = useState(mockBadges);
   const [successMsg, setSuccessMsg] = useState('');
+
+  // تحديث النقاط والترتيب عند كل تغيير في النقاط
+  useEffect(() => {
+    // تحديث نقاط المستخدم الحالي في اللوحة
+    setLeaderboard(prev => prev.map(u => u.isCurrent ? { ...u, points } : u));
+  }, [points]);
+
+  useEffect(() => {
+    // ترتيب المستخدمين من الأعلى للأقل
+    const sorted = [...leaderboard].sort((a, b) => b.points - a.points);
+    const current = sorted.find(u => u.isCurrent);
+    // إذا لم يشارك أحد (كل النقاط 0)
+    if (sorted.every(u => u.points === 0)) {
+      setRank(0);
+      return;
+    }
+    // الترتيب حسب النقاط (الأكثر = 1)
+    const uniquePoints = [...new Set(sorted.map(u => u.points))];
+    const userRank = uniquePoints.indexOf(current.points) + 1;
+    setRank(userRank);
+  }, [leaderboard]);
 
   // دوال تفاعلية واقعية
   const startDailyChallenge = () => {
@@ -231,6 +252,7 @@ export const ChallengeProvider = ({ children }) => {
         repeatChallenge,
         shareAchievement,
         successMsg,
+        setPoints
       }}
     >
       {children}

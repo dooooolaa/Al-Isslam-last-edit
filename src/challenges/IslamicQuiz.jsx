@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -10,6 +10,9 @@ import Divider from '@mui/material/Divider';
 import { FaQuran, FaUserTie, FaBook, FaMosque, FaPrayingHands, FaUsers, FaStarAndCrescent, FaFemale, FaHistory, FaRandom } from 'react-icons/fa';
 import { MdOutlineQuiz } from 'react-icons/md';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { ChallengeContext } from '../context/ChallengeContext';
 
 // أقسام المسابقة
 const quizSections = [
@@ -178,6 +181,8 @@ const IslamicQuiz = () => {
   const [attempts, setAttempts] = useState(0);
   const [numQuestions, setNumQuestions] = useState(null);
   const [sectionQuestionsCount, setSectionQuestionsCount] = useState(0);
+  const navigate = useNavigate();
+  const { setPoints } = useContext(ChallengeContext);
 
   // بدء الاختبار
   const startQuiz = () => {
@@ -243,6 +248,13 @@ const IslamicQuiz = () => {
 
   // محاولة ثانية
   const tryAgain = () => setAttempts(a => a + 1);
+
+  // عند ظهور النتيجة النهائية، احسب النقاط الفعلية
+  useEffect(() => {
+    if (showResult) {
+      setPoints(score);
+    }
+  }, [showResult]);
 
   return (
     <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', py: 4, px: 1 }} className="dark:bg-[#181c23] bg-gold-50">
@@ -364,7 +376,9 @@ const IslamicQuiz = () => {
               <Typography variant="h6" fontWeight={700} color="success.main">🎉 نتيجتك: {score} / {questions.length * 10}</Typography>
               <Typography fontWeight={600} mt={1}>👑 أنت: "{getLevel((score / (questions.length * 10)) * 100)}"</Typography>
               <Typography fontWeight={600} mt={1}>📈 سجل نقاطك: {score} نقطة</Typography>
-              <Button variant="contained" color="primary" sx={{ mt: 2, fontWeight: 700, borderRadius: 2 }} onClick={retry}>🔄 أعد الاختبار</Button>
+              <Button variant="contained" color="primary" sx={{ mt: 2, fontWeight: 700, borderRadius: 2, mx: 1 }} onClick={retry}>🔄 اختبار جديد</Button>
+              <Button variant="outlined" color="secondary" sx={{ mt: 2, fontWeight: 700, borderRadius: 2, mx: 1 }} onClick={() => navigate('/challenges')}>🏠 الرجوع لقائمة التحديات</Button>
+              <Button variant="outlined" color="success" sx={{ mt: 2, fontWeight: 700, borderRadius: 2, mx: 1 }} onClick={() => navigate('/challenges')}>👑 رؤية الترتيب</Button>
             </Box>
           )}
         </div>
