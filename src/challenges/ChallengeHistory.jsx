@@ -2,6 +2,42 @@ import React, { useContext } from 'react';
 import { ChallengeContext } from '../context/ChallengeContext';
 import BadgeList from './components/BadgeList';
 import { Link } from 'react-router-dom';
+import { FaCalendarWeek, FaBookOpen, FaBook, FaHistory } from 'react-icons/fa';
+
+const sections = [
+  {
+    key: 'weekly',
+    title: 'التحديات الأسبوعية',
+    desc: 'اختبر نفسك أسبوعياً في الحفظ والمراجعة.',
+    icon: <FaCalendarWeek size={32} color="#f59e0b" />,
+    to: '/challenges/weekly',
+    color: '#fff7e6'
+  },
+  {
+    key: 'memorization',
+    title: 'الحفظ',
+    desc: 'تابع تقدمك في حفظ القرآن.',
+    icon: <FaBookOpen size={32} color="#1976d2" />,
+    to: '/challenges/memorization',
+    color: '#e3f2fd'
+  },
+  {
+    key: 'tafsir',
+    title: 'التفسير',
+    desc: 'أسئلة لفهم وتدبر معاني القرآن.',
+    icon: <FaBook size={32} color="#43a047" />,
+    to: '/challenges/tafsir',
+    color: '#e8f5e9'
+  },
+  {
+    key: 'history',
+    title: 'السجل',
+    desc: 'شاهد إنجازاتك وسجل التحديات.',
+    icon: <FaHistory size={32} color="#8d6e63" />,
+    to: '/challenges/history',
+    color: '#fbe9e7'
+  },
+];
 
 const ChallengeHistory = () => {
   const { history, badges, repeatChallenge, shareAchievement, successMsg } = useContext(ChallengeContext);
@@ -33,6 +69,7 @@ const ChallengeHistory = () => {
           </li>
         ))}
       </ul>
+      <Link to="/challenges/sections" className="text-green-600 hover:underline">اكتشف المزيد →</Link>
     </div>
   );
 };

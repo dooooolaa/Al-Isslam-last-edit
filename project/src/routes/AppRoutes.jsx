@@ -53,6 +53,7 @@ import MemorizationTracker from '../../../src/challenges/MemorizationTracker';
 import TafsirQuests from '../../../src/challenges/TafsirQuests';
 import ChallengeHistory from '../../../src/challenges/ChallengeHistory';
 import IslamicQuiz from '../../../src/challenges/IslamicQuiz';
+import SectionsGrid from '../../../src/challenges/SectionsGrid';
 
 const AppRoutes = () => {
   return (
@@ -93,6 +94,7 @@ const AppRoutes = () => {
       <Route path="/challenges/tafsir" element={<TafsirQuests />} />
       <Route path="/challenges/history" element={<ChallengeHistory />} />
       <Route path="/challenges/quiz" element={<IslamicQuiz />} />
+      <Route path="/challenges/sections" element={<SectionsGrid />} />
       <Route path="/family" element={<FamilyIndex />} />
       <Route path="/family/life" element={<FamilyLife />} />
       <Route path="/family/parenting" element={<ParentingGuide />} />
