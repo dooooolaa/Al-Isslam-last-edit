@@ -2,6 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Clock, ArrowLeft, Calendar, User, Eye } from 'lucide-react';
 
+// دالة لتحويل الأرقام الإنجليزية إلى أرقام عربية
+function toArabicNumbers(str) {
+  return str.replace(/[0-9]/g, d =>
+    '٠١٢٣٤٥٦٧٨٩'[d]
+  );
+}
+
 const Topics = () => {
   const topics = [
     {
@@ -63,11 +70,9 @@ const Topics = () => {
         ## خاتمة:
         الدعاء نعمة عظيمة من الله تعالى، فهو باب مفتوح بين العبد وربه في كل وقت وحين. فلنكثر من الدعاء ولنتأدب بآدابه، ولنتحر الأوقات المستجابة، وليكن دعاؤنا بخشوع وحضور قلب، والله أعلم.
       `,
-      readTime: '8 دقائق',
       category: 'العبادة والأذكار',
-      publishDate: '2024-01-15',
+      publishDate: '2025-07-01',
       author: 'فريق الإسلام حياة',
-      views: 1250,
       tags: ['الدعاء', 'العبادة', 'الأذكار', 'السنة النبوية']
     },
     {
@@ -151,11 +156,9 @@ const Topics = () => {
         ## خاتمة:
         الاستغفار باب عظيم من أبواب الخير، وطريق إلى رضا الله ومغفرته. فلنكثر من الاستغفار ولنجعله جزءاً من حياتنا اليومية، ولنتذكر أن الله تعالى يحب من عبده أن يستغفره ويتوب إليه، والله أعلم.
       `,
-      readTime: '10 دقائق',
       category: 'العبادة والأذكار',
-      publishDate: '2024-01-10',
+      publishDate: '2025-07-01',
       author: 'فريق الإسلام حياة',
-      views: 980,
       tags: ['الاستغفار', 'التوبة', 'العبادة', 'الأذكار']
     }
   ];
@@ -185,15 +188,9 @@ const Topics = () => {
                   </span>
                   <div className="flex items-center space-x-1 rtl:space-x-reverse">
                     <Calendar size={14} />
-                    <span className="font-arabic">{new Date(topic.publishDate).toLocaleDateString('ar-SA')}</span>
-                  </div>
-                  <div className="flex items-center space-x-1 rtl:space-x-reverse">
-                    <Clock size={14} />
-                    <span className="font-arabic">{topic.readTime}</span>
-                  </div>
-                  <div className="flex items-center space-x-1 rtl:space-x-reverse">
-                    <Eye size={14} />
-                    <span className="font-arabic">{topic.views} مشاهدة</span>
+                    <span className="font-arabic">{new Date(topic.publishDate).toLocaleDateString('ar-EG')}</span>
+                    <span className="mx-1">|</span>
+                    <span className="font-arabic">{toArabicNumbers('1447/01/05')}</span>
                   </div>
                 </div>
 

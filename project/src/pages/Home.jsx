@@ -74,13 +74,13 @@ const Home = () => {
     {
       title: 'فضائل الدعاء في الإسلام',
       excerpt: 'الدعاء هو العبادة، وهو الصلة بين العبد وربه، ووسيلة للتقرب إلى الله والحصول على رحمته وبركاته...',
-      readTime: '5 دقائق',
+      readTime: '1/7/2025',
       category: 'مواضيع دينية'
     },
     {
       title: 'أسباب الاستغفار وفوائده',
       excerpt: 'الاستغفار من أعظم العبادات التي يتقرب بها العبد إلى ربه، وله فوائد عظيمة في الدنيا والآخرة...',
-      readTime: '7 دقائق',
+      readTime: '1/7/2025',
       category: 'مواضيع دينية'
     }
   ];
@@ -232,7 +232,7 @@ const Home = () => {
                     {topic.category}
                   </span>
                   <div className="flex items-center text-gray-500 dark:text-gray-400 text-sm">
-                    <Clock size={14} className="ml-1 rtl:mr-1 rtl:ml-0" />
+                    {/* تم حذف أيقونة الساعة ونص الدقائق */}
                     <span className="font-arabic">{topic.readTime}</span>
                   </div>
                 </div>

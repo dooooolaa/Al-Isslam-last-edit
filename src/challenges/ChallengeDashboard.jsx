@@ -14,7 +14,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Fade from '@mui/material/Fade';
 // Icons
-import { FaBookOpen, FaBrain, FaLightbulb, FaHandsHelping, FaRegQuestionCircle } from 'react-icons/fa';
+import { FaBookOpen, FaBrain, FaLightbulb, FaHandsHelping, FaRegQuestionCircle, FaCalendarWeek, FaBook, FaHistory } from 'react-icons/fa';
 
 const icons = {
   'تلاوة': <FaBookOpen size={28} color="#388e3c" />,
@@ -23,6 +23,41 @@ const icons = {
   'تطبيق': <FaHandsHelping size={28} color="#8d6e63" />,
   'فهم وتفسير': <FaRegQuestionCircle size={28} color="#7b1fa2" />,
 };
+
+const sections = [
+  {
+    key: 'weekly',
+    title: 'التحديات الأسبوعية',
+    desc: 'اختبر نفسك أسبوعياً في الحفظ والمراجعة.',
+    icon: <FaCalendarWeek size={32} color="#f59e0b" />,
+    to: '/challenges/weekly',
+    color: '#fff7e6'
+  },
+  {
+    key: 'memorization',
+    title: 'الحفظ',
+    desc: 'تابع تقدمك في حفظ القرآن.',
+    icon: <FaBookOpen size={32} color="#1976d2" />,
+    to: '/challenges/memorization',
+    color: '#e3f2fd'
+  },
+  {
+    key: 'tafsir',
+    title: 'التفسير',
+    desc: 'أسئلة لفهم وتدبر معاني القرآن.',
+    icon: <FaBook size={32} color="#43a047" />,
+    to: '/challenges/tafsir',
+    color: '#e8f5e9'
+  },
+  {
+    key: 'history',
+    title: 'السجل',
+    desc: 'شاهد إنجازاتك وسجل التحديات.',
+    icon: <FaHistory size={32} color="#8d6e63" />,
+    to: '/challenges/history',
+    color: '#fbe9e7'
+  },
+];
 
 const getRandomItem = arr => arr[Math.floor(Math.random() * arr.length)];
 
@@ -81,11 +116,11 @@ const ChallengeDashboard = () => {
             size="large"
             sx={{ fontWeight: 700, fontSize: 18, borderRadius: 3, boxShadow: 3, bgcolor: 'gold.500', color: 'white', '&:hover': { bgcolor: 'gold.600' } }}
           >
-            🏆 جرب المسابقة الإسلامية التفاعلية
+            🏆 ابدأ المسابقة الإسلامية التفاعلية
           </Button>
         </Box>
         {/* نسبة الإنجاز والنقاط */}
-        <Card sx={{ mb: 3, p: 2, boxShadow: 2, border: '2px solid', borderColor: 'gold.500', bgcolor: 'white', color: 'text.primary' }} className="dark:bg-[#23272f] dark:text-primary-500 text-primary-500 shadow-lg border-2 border-gold-500">
+        <Card sx={{ mb: 3, p: 2, boxShadow: 2, border: '2px solid', borderColor: 'gold.500', bgcolor: 'white', color: 'text.primary' }} className="bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition-all border-r-4 border-primary-600">
           <Box display="flex" flexDirection={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems="center" gap={2}>
             <Box>
               <Typography fontWeight={600} className="text-primary-500">نقاطك من المسابقات:</Typography>
@@ -97,9 +132,16 @@ const ChallengeDashboard = () => {
           </Box>
         </Card>
         {/* الترتيب */}
-        <Card sx={{ p: 2, boxShadow: 1, border: '2px solid', borderColor: 'gold.400', bgcolor: 'white', color: 'text.primary' }} className="dark:bg-[#23272f] dark:text-primary-500 text-primary-500 shadow-lg border-2 border-gold-400">
+        <Card sx={{ p: 2, boxShadow: 1, border: '2px solid', borderColor: 'gold.400', bgcolor: 'white', color: 'text.primary' }} className="bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition-all border-r-4 border-gold-400">
           <Leaderboard />
         </Card>
+        
+        {/* بطاقات الأقسام */}
+        <Box mt={4} display="flex" justifyContent="center">
+          <Button variant="outlined" size="large" sx={{fontSize: 22, px: 8, py: 2, borderRadius: 3, color: 'gray', borderColor: 'gray', bgcolor: '#f5f5f5'}} disabled>
+            قريبًا
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

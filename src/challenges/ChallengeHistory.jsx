@@ -40,6 +40,7 @@ const sections = [
 ];
 
 const ChallengeHistory = () => {
+  console.log("ChallengeHistory Rendered");
   const { history, badges, repeatChallenge, shareAchievement, successMsg } = useContext(ChallengeContext);
 
   return (
@@ -69,7 +70,12 @@ const ChallengeHistory = () => {
           </li>
         ))}
       </ul>
-      <Link to="/challenges/sections" className="text-green-600 hover:underline">اكتشف المزيد →</Link>
+      {/* نص تشخيصي */}
+      <div style={{fontWeight: 'bold', color: 'blue', fontSize: 26, margin: '20px 0', textAlign: 'center'}}>صفحة سجل التحديات (ChallengeHistory) تعمل ✅</div>
+      <div className="flex justify-center my-8">
+        <button className="btn btn-secondary text-2xl px-10 py-4 opacity-60 cursor-not-allowed" disabled>قريبًا</button>
+      </div>
+      {/* نهاية التعديلات */}
     </div>
   );
 };
