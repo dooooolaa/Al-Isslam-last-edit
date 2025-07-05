@@ -259,8 +259,8 @@ import { Calendar, User, ArrowLeft, Heart, Share2, BookOpen } from 'lucide-react
     conclusion: {
       text: 'استغفر الله على الدوام... فإنك لا تدري أي ذنب حجب عنك النور وأخر عنك الفرج.'
     }
-  }
-};
+    }
+  };
 
 const TopicDetail = () => {
   const { id } = useParams();
@@ -336,41 +336,41 @@ const TopicDetail = () => {
     if (favs.includes(id)) {
       favs = favs.filter(f => f !== id);
       setIsFav(false);
-    } else {
+        } else {
       favs.push(id);
       setIsFav(true);
-    }
+        }
     localStorage.setItem('favTopics', JSON.stringify(favs));
   };
 
   // عرض موضوع الدعاء (id=1)
   if (id === '1') {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Toast */}
           {showToast && (
             <div className="fixed top-8 left-1/2 -translate-x-1/2 z-50 bg-green-600 text-white px-6 py-2 rounded shadow-lg font-arabic text-lg animate-fadein">
               تم نسخ رابط الصفحة!
-            </div>
+          </div>
           )}
           {/* Header */}
           <header className="mb-8">
             <div className="text-center mb-4">
-              <span className="px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 rounded-full text-sm font-arabic">
-                {topic.category}
-              </span>
-            </div>
+            <span className="px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 rounded-full text-sm font-arabic">
+              {topic.category}
+            </span>
+          </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-4 font-arabic leading-tight">
-              {topic.title}
-            </h1>
+            {topic.title}
+          </h1>
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500 dark:text-gray-400 mb-4">
-              <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <User size={16} />
-                <span className="font-arabic">{topic.author}</span>
-              </div>
-              <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <Calendar size={16} />
+            <div className="flex items-center space-x-2 rtl:space-x-reverse">
+              <User size={16} />
+              <span className="font-arabic">{topic.author}</span>
+            </div>
+            <div className="flex items-center space-x-2 rtl:space-x-reverse">
+              <Calendar size={16} />
                 <span className="font-arabic">{new Date(topic.publishDate).toLocaleDateString('ar-EG')}</span>
                 <span className="mx-1">|</span>
                 <span className="font-arabic">{topic.hijriDate} هـ</span>
@@ -586,8 +586,8 @@ const TopicDetail = () => {
                     <div className="text-gray-600 dark:text-gray-400 font-arabic text-sm">{t.evidence}</div>
                   </div>
                 </div>
-              ))}
-            </div>
+            ))}
+          </div>
           </section>
 
           {/* 5. صيغ الاستغفار */}
@@ -604,8 +604,8 @@ const TopicDetail = () => {
                     onClick={() => handleCopyDua(d.text, idx)}
                   >
                     {copiedIdx === idx ? 'تم النسخ' : 'نسخ'}
-                  </button>
-                </div>
+            </button>
+          </div>
               ))}
             </div>
           </section>
@@ -638,19 +638,19 @@ const TopicDetail = () => {
             </div>
           </section>
 
-          {/* Navigation */}
+        {/* Navigation */}
           <div className="flex justify-between items-center mt-8">
-            <Link
-              to="/topics"
-              className="inline-flex items-center space-x-2 rtl:space-x-reverse text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-arabic"
-            >
-              <ArrowLeft className="rtl:rotate-180" size={16} />
-              <span>العودة إلى المواضيع</span>
-            </Link>
+          <Link
+            to="/topics"
+            className="inline-flex items-center space-x-2 rtl:space-x-reverse text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-arabic"
+          >
+            <ArrowLeft className="rtl:rotate-180" size={16} />
+            <span>العودة إلى المواضيع</span>
+          </Link>
           </div>
-        </div>
       </div>
-    );
+    </div>
+  );
   }
 };
 

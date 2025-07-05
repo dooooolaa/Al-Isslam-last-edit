@@ -57,13 +57,8 @@ const Navbar = () => {
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2 rtl:space-x-reverse">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-islamic-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">إح</span>
-              </div>
-              <span className="text-xl font-bold text-gray-900 dark:text-white font-arabic">
-                الإسلام حياة
-              </span>
+            <Link to="/" className="flex items-center">
+              <img src="/logo.png" alt="شعار الإسلام حياة" className="w-150 h-70 object-contain" />
             </Link>
           </div>
           {/* Desktop Navigation */}
