@@ -58,7 +58,7 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <img src="/logo.png" alt="شعار الإسلام حياة" className="w-150 h-70 object-contain" />
+              <img src="/logo.png" alt="شعار الإسلام حياة" className="w-32 h-20 object-contain" />
             </Link>
           </div>
           {/* Desktop Navigation */}
