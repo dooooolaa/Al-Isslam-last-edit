@@ -6,7 +6,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AppRoutes from './routes/AppRoutes';
 import { ArrowRight } from 'lucide-react';
-import { ChallengeProvider } from '../../src/context/ChallengeContext';
+import { ChallengeProvider } from './context/ChallengeContext';
 
 function BackButton() {
   const location = useLocation();

@@ -33,27 +33,27 @@ import HajjUmrahQuestions from '../pages/events/HajjUmrahQuestions';
 import HijriCalendarQuestions from '../pages/events/HijriCalendarQuestions';
 import BlessedDaysQuestions from '../pages/events/BlessedDaysQuestions';
 // Import new Islamic jurisprudence Q&A pages
-import AqeedahQA from '../../../src/pages/AqeedahQA';
-import IbadatQA from '../../../src/pages/IbadatQA';
-import FinancialQA from '../../../src/pages/FinancialQA';
-import PersonalStatusQA from '../../../src/pages/PersonalStatusQA';
-import EthicsQA from '../../../src/pages/EthicsQA';
-import EntertainmentQA from '../../../src/pages/EntertainmentQA';
-import ContemporaryQA from '../../../src/pages/ContemporaryQA';
-import NonMuslimsQA from '../../../src/pages/NonMuslimsQA';
-import MuslimWomenQA from '../../../src/pages/MuslimWomenQA';
+import AqeedahQA from '../pages/AqeedahQA';
+import IbadatQA from '../pages/IbadatQA';
+import FinancialQA from '../pages/FinancialQA';
+import PersonalStatusQA from '../pages/PersonalStatusQA';
+import EthicsQA from '../pages/EthicsQA';
+import EntertainmentQA from '../pages/EntertainmentQA';
+import ContemporaryQA from '../pages/ContemporaryQA';
+import NonMuslimsQA from '../pages/NonMuslimsQA';
+import MuslimWomenQA from '../pages/MuslimWomenQA';
 // Import support and contact pages
 import About from '../pages/About';
 import Contact from '../pages/Contact';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
-import ChallengeDashboard from '../../../src/challenges/ChallengeDashboard';
-import WeeklyChallenges from '../../../src/challenges/WeeklyChallenges';
-import MemorizationTracker from '../../../src/challenges/MemorizationTracker';
-import TafsirQuests from '../../../src/challenges/TafsirQuests';
-import ChallengeHistory from '../../../src/challenges/ChallengeHistory';
-import IslamicQuiz from '../../../src/challenges/IslamicQuiz';
-import SectionsGrid from '../../../src/challenges/SectionsGrid';
+import ChallengeDashboard from '../challenges/ChallengeDashboard';
+import WeeklyChallenges from '../challenges/WeeklyChallenges';
+import MemorizationTracker from '../challenges/MemorizationTracker';
+import TafsirQuests from '../challenges/TafsirQuests';
+import ChallengeHistory from '../challenges/ChallengeHistory';
+import IslamicQuiz from '../challenges/IslamicQuiz';
+import SectionsGrid from '../challenges/SectionsGrid';
 
 const AppRoutes = () => {
   return (
