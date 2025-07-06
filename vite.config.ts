@@ -17,7 +17,7 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
-          firebase: ['firebase'],
+          firebase: ['firebase/app'],
           mui: ['@mui/material', '@mui/icons-material', '@emotion/react', '@emotion/styled']
         }
       }

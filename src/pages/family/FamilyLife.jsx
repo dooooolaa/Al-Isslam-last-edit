@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, Users, BookOpen, Handshake, Gift, UserCheck, AlertTriangle, Star, Home, Link2 } from 'lucide-react';
+import { Heart, Users, BookOpen, Gift, UserCheck, AlertTriangle, Star, Home, Link2 } from 'lucide-react';
 
 const sections = [
   {
@@ -7,7 +7,7 @@ const sections = [
     content: 'الأسرة هي اللبنة الأولى في بناء المجتمع، وبصلاحها يصلح المجتمع كله. الإسلام أولى الأسرة عناية كبيرة في التشريع والتوجيه.'
   },
   {
-    icon: <Handshake className="text-gold-500 w-7 h-7 mb-2" />, title: 'أحكام الزواج في الإسلام',
+    icon: <Users className="text-gold-500 w-7 h-7 mb-2" />, title: 'أحكام الزواج في الإسلام',
     content: (
       <ul className="list-disc pr-6 font-arabic space-y-1">
         <li>الخطبة: التعارف الشرعي قبل العقد.</li>
