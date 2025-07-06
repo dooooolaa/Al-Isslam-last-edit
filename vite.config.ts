@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
     exclude: ['lucide-react'],
+    include: ['@mui/material', '@mui/icons-material', '@emotion/react', '@emotion/styled']
   },
   build: {
     outDir: 'dist',
@@ -16,13 +17,14 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
-          firebase: ['firebase']
+          firebase: ['firebase'],
+          mui: ['@mui/material', '@mui/icons-material', '@emotion/react', '@emotion/styled']
         }
       }
     }
   },
   server: {
     host: '0.0.0.0',
-    port: process.env.PORT || 3000
+    port: parseInt(process.env.PORT || '3000')
   }
 });
