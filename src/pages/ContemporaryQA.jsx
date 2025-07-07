@@ -5,6 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
+import fuzzyIncludes from './fuzzy';
 
 const ContemporaryQA = () => {
   const navigate = useNavigate();
@@ -88,7 +89,7 @@ const ContemporaryQA = () => {
   const categories = ['الكل', 'الطب والعلاج', 'المعاملات المالية', 'العمل والوظائف'];
 
   const filteredQuestions = questions.filter(q => {
-    const matchesSearch = q.question.includes(searchTerm) || q.answer.includes(searchTerm);
+    const matchesSearch = fuzzyIncludes(q.question, searchTerm) || fuzzyIncludes(q.answer, searchTerm);
     const matchesCategory = selectedCategory === 'الكل' || q.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });

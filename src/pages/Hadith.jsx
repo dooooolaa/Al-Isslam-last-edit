@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import fuzzyIncludes from './fuzzy';
 
 const HADITH_API_BASE = 'https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1'
 
@@ -9,13 +10,6 @@ const hadithBooks = {
   'tirmidhi': { name: 'سنن الترمذي', nameEn: 'Jami at-Tirmidhi', description: 'من كتب السنن الأربعة' },
   'nasai': { name: 'سنن النسائي', nameEn: 'Sunan an-Nasai', description: 'من كتب السنن الأربعة' },
   'ibnmajah': { name: 'سنن ابن ماجه', nameEn: 'Sunan Ibn Majah', description: 'من كتب السنن الأربعة' }
-}
-
-// دالة بحث تقريبية بسيطة
-function fuzzyIncludes(text, search) {
-  if (!search) return true;
-  if (!text) return false;
-  return text.toLowerCase().includes(search.toLowerCase());
 }
 
 function arabicGrade(gradeObjOrStr) {

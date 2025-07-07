@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, BookOpen, Search, Play, Pause } from 'lucide-react';
+import fuzzyIncludes from './fuzzy';
 
 const RECITERS = [
   { id: 'minshawi_mojawwad', name: 'محمد صديق المنشاوي (مجود)', language: 'عربي', url: 'https://server10.mp3quran.net/minsh/Almusshaf-Al-Mojawwad/' },
@@ -167,8 +168,8 @@ const Quran = () => {
   };
 
   const filteredSurahs = surahs.filter(surah => 
-    surah.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    surah.englishName.toLowerCase().includes(searchTerm.toLowerCase())
+    fuzzyIncludes(surah.name, searchTerm) ||
+    fuzzyIncludes(surah.englishName, searchTerm)
   );
 
   const handleBackToSurahList = () => {

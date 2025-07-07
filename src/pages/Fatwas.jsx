@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import fuzzyIncludes from './fuzzy';
 // import FavoriteButton from '../components/FavoriteButton'; // فعلها عند توفر المكون
 
 const fatwasData = [
@@ -32,7 +33,7 @@ const Fatwas = () => {
   const [authority, setAuthority] = useState('');
 
   const filtered = fatwasData.filter(f =>
-    (!search || f.question.includes(search) || f.answer.includes(search)) &&
+    (!search || fuzzyIncludes(f.question, search) || fuzzyIncludes(f.answer, search)) &&
     (!category || f.category === category) &&
     (!authority || f.authority === authority)
   );

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import fuzzyIncludes from '../fuzzy';
 
 const ethicsQuestions = [
   {
@@ -88,7 +89,7 @@ const EthicsQuestions = () => {
 
   const filteredQuestions = ethicsQuestions.filter(q => {
     const matchesCategory = selectedCategory === 'all' || q.category.includes(selectedCategory);
-    const matchesSearch = q.question.includes(searchQuery) || q.answer.includes(searchQuery);
+    const matchesSearch = fuzzyIncludes(q.question, searchQuery) || fuzzyIncludes(q.answer, searchQuery);
     return matchesCategory && matchesSearch;
   });
 

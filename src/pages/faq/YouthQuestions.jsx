@@ -1,1 +1,1 @@
- 
+import fuzzyIncludes from '../fuzzy';

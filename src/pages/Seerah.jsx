@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import fuzzyIncludes from './fuzzy';
 
 const seerahEvents = [
   {
@@ -172,7 +173,7 @@ const Seerah = () => {
   const [miracleOpen, setMiracleOpen] = useState(null);
 
   const filtered = seerahEvents.filter(e =>
-    (!search || e.title.includes(search) || e.details.includes(search))
+    (!search || fuzzyIncludes(e.title, search) || fuzzyIncludes(e.details, search))
   );
 
   return (
