@@ -16,6 +16,7 @@ import {
   Home,
   ArrowRight
 } from 'lucide-react';
+import { FaBook } from 'react-icons/fa';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 
@@ -31,6 +32,7 @@ const Navbar = () => {
     { name: 'الرئيسية', href: '/', icon: Home },
     { name: 'القرآن الكريم', href: '/quran', icon: BookOpen },
     { name: 'العبادة والأذكار', href: '/worship', icon: Heart },
+    { name: 'الأحاديث النبوية', href: '/knowledge/hadith', icon: FaBook },
     { name: 'الأحداث الإسلامية', href: '/events', icon: Calendar },
     { name: 'التقويم الهجري', href: '/events/hijri-calendar', icon: Calendar },
     { name: 'المحتوى العلمي', href: '/knowledge', icon: BookOpen },
