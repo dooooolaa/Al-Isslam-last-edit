@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { FaBook } from 'react-icons/fa';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +16,7 @@ const Navbar = () => {
     { path: '/topics', label: 'المواضيع' },
     { path: '/quran', label: 'القرآن الكريم' },
     { path: '/adhkar', label: 'الأذكار' },
+    { path: '/knowledge/hadith', label: 'الأحاديث النبوية', icon: FaBook },
     { path: '/scientific', label: 'المحتوى العلمي' },
   ];
 
@@ -47,6 +49,7 @@ const Navbar = () => {
                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                 }`}
               >
+                {link.icon ? <link.icon size={18} style={{marginLeft: 4, marginRight: 4}} /> : null}
                 {link.label}
               </Link>
             ))}
@@ -94,6 +97,7 @@ const Navbar = () => {
                 }`}
                 onClick={() => setIsOpen(false)}
               >
+                {link.icon ? <link.icon size={20} style={{marginLeft: 4, marginRight: 4}} /> : null}
                 {link.label}
               </Link>
             ))}
