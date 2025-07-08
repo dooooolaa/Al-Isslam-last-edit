@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "engines": {
-    "node": "18.19.0"
+    "node": ">=18.19.0 <=20.x"
   },
   "dependencies": {
     "@mui/material": "^5.15.0",
