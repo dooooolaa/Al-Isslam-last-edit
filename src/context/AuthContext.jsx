@@ -1,15 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { 
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword, 
-  signOut, 
-  onAuthStateChanged,
-  GoogleAuthProvider,
-  signInWithPopup,
-  updateProfile
-} from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { auth, db } from '../firebase/config';
+import { auth, profiles } from '../lib/supabase';
 
 const AuthContext = createContext();
 
@@ -23,86 +13,88 @@ export const AuthProvider = ({ children }) => {
   const [userProfile, setUserProfile] = useState(null);
 
   const signup = async (email, password, displayName) => {
-    const result = await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(result.user, { displayName });
-    
-    // Create user profile in Firestore
-    await setDoc(doc(db, 'users', result.user.uid), {
-      uid: result.user.uid,
-      email: email,
-      displayName: displayName,
-      createdAt: new Date(),
-      preferences: {
-        theme: 'light',
-        language: 'ar',
-        notifications: true
-      },
-      progress: {
-        quranReading: {},
-        challenges: [],
-        favorites: []
-      }
+    // تسجيل المستخدم في Supabase Auth
+    const { data, error } = await auth.signUp(email, password, {
+      full_name: displayName
     });
-    
-    return result;
-  };
 
-  const login = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
-  };
+    if (error) throw error;
 
-  const loginWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    const result = await signInWithPopup(auth, provider);
-    
-    // Check if user profile exists, create if not
-    const userDoc = await getDoc(doc(db, 'users', result.user.uid));
-    if (!userDoc.exists()) {
-      await setDoc(doc(db, 'users', result.user.uid), {
-        uid: result.user.uid,
-        email: result.user.email,
-        displayName: result.user.displayName,
-        photoURL: result.user.photoURL,
-        createdAt: new Date(),
+    // إنشاء ملف شخصي في قاعدة البيانات
+    if (data.user) {
+      const { error: profileError } = await profiles.create({
+        id: data.user.id,
+        username: email.split('@')[0], // استخدام الجزء الأول من الإيميل كاسم مستخدم
+        full_name: displayName,
         preferences: {
           theme: 'light',
           language: 'ar',
           notifications: true
-        },
-        progress: {
-          quranReading: {},
-          challenges: [],
-          favorites: []
         }
       });
+      
+      if (profileError) {
+        console.error('Error creating profile:', profileError);
+      }
     }
-    
-    return result;
+
+    return data;
+  };
+
+  const login = (email, password) => {
+    return auth.signIn(email, password);
+  };
+
+  const loginWithGoogle = async () => {
+    const { data, error } = await auth.signInWithGoogle();
+
+    if (error) throw error;
+
+    // التحقق من وجود ملف شخصي وإنشاؤه إذا لم يكن موجوداً
+    if (data.user) {
+      const { data: existingProfile } = await profiles.get(data.user.id);
+      
+      if (!existingProfile) {
+        await profiles.create({
+          id: data.user.id,
+          username: data.user.email?.split('@')[0] || 'user',
+          full_name: data.user.user_metadata?.full_name || data.user.user_metadata?.name,
+          avatar_url: data.user.user_metadata?.avatar_url,
+          preferences: {
+            theme: 'light',
+            language: 'ar',
+            notifications: true
+          }
+        });
+      }
+    }
+
+    return data;
   };
 
   const logout = () => {
-    return signOut(auth);
+    return auth.signOut();
   };
 
   const fetchUserProfile = async (uid) => {
-    const userDoc = await getDoc(doc(db, 'users', uid));
-    if (userDoc.exists()) {
-      setUserProfile(userDoc.data());
+    const { data, error } = await profiles.get(uid);
+    if (data && !error) {
+      setUserProfile(data);
     }
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setCurrentUser(user);
-      if (user) {
-        await fetchUserProfile(user.uid);
+    const { data: { subscription } } = auth.onAuthStateChange(async (event, session) => {
+      setCurrentUser(session?.user || null);
+      if (session?.user) {
+        await fetchUserProfile(session.user.id);
       } else {
         setUserProfile(null);
       }
       setLoading(false);
     });
 
-    return unsubscribe;
+    return () => subscription?.unsubscribe();
   }, []);
 
   const value = {
