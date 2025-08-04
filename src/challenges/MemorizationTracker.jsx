@@ -9,6 +9,16 @@ const MemorizationTracker = () => {
   const { memorizationPlan, todayAyat, audioReciter, setReciter, successMsg } = useContext(ChallengeContext);
   const { progress: memProgress, updateAyahStatus, getProgressStats, loading } = useMemorization();
   
+  if (loading) {
+    return (
+      <div className="bg-white dark:bg-gray-900 bg-gold-50 dark:bg-gray-900 p-6 rounded-lg shadow-md max-w-3xl mx-auto mt-8">
+        <div className="flex items-center justify-center h-32">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gold-500"></div>
+        </div>
+      </div>
+    );
+  }
+
   const stats = getProgressStats();
 
   const handleMarkStatus = async (ayah, status) => {
@@ -23,6 +33,7 @@ const MemorizationTracker = () => {
       alert('حدث خطأ في حفظ التقدم');
     }
   };
+
   return (
     <div className="bg-white dark:bg-gray-900 bg-gold-50 dark:bg-gray-900 p-6 rounded-lg shadow-md max-w-3xl mx-auto mt-8">
       <div className="flex gap-2 mb-6 justify-center">
@@ -67,13 +78,4 @@ const MemorizationTracker = () => {
   );
 };
 
-  if (loading) {
-    return (
-      <div className="bg-white dark:bg-gray-900 bg-gold-50 dark:bg-gray-900 p-6 rounded-lg shadow-md max-w-3xl mx-auto mt-8">
-        <div className="flex items-center justify-center h-32">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gold-500"></div>
-        </div>
-      </div>
-    );
-  }
-export default MemorizationTracker; 
+export default MemorizationTracker;
