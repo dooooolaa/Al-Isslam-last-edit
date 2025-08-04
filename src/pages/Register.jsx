@@ -251,7 +251,7 @@ const Register = () => {
                 className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
               />
               <label htmlFor="agree-terms" className="mr-2 rtl:ml-2 rtl:mr-0 block text-sm text-gray-700 dark:text-gray-300 font-arabic">
-                أوافق على <Link to="/terms" className="text-primary-600 hover:text-primary-500">شروط الاستخدام</Link> و <Link to="/privacy" className="text-primary-600 hover:text-primary-500">سياسة الخصوصية</Link>
+                أوافق على <Link to="/terms" className="text-primary-600 hover:text-primary-500">شروط الاستخدام</Link> و <Link to="/privacy" className=\"text-primary-600 hover:text-primary-500">سياسة الخصوصية</Link>
               </label>
             </div>
 
