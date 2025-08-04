@@ -31,7 +31,17 @@ const Login = () => {
       await login(formData.email, formData.password);
       navigate('/');
     } catch (error) {
-      setError('خطأ في البريد الإلكتروني أو كلمة المرور');
+      console.error('Login error:', error);
+      
+      let msg = 'خطأ في البريد الإلكتروني أو كلمة المرور';
+      
+      if (error.message && error.message.includes('Supabase')) {
+        msg = 'يجب إعداد Supabase أولاً. اضغط على زر "Connect to Supabase" في أعلى الصفحة.';
+      } else if (error.message) {
+        msg = error.message;
+      }
+      
+      setError(msg);
     }
     
     setLoading(false);
@@ -45,7 +55,17 @@ const Login = () => {
       await loginWithGoogle();
       navigate('/');
     } catch (error) {
-      setError('خطأ في تسجيل الدخول بجوجل');
+      console.error('Google login error:', error);
+      
+      let msg = 'خطأ في تسجيل الدخول بجوجل';
+      
+      if (error.message && error.message.includes('Supabase')) {
+        msg = 'يجب إعداد Supabase أولاً. اضغط على زر "Connect to Supabase" في أعلى الصفحة.';
+      } else if (error.message) {
+        msg = error.message;
+      }
+      
+      setError(msg);
     }
     
     setLoading(false);

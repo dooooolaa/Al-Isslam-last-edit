@@ -3,16 +3,24 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
+// التحقق من وجود متغيرات البيئة
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables');
+  console.warn('⚠️ Supabase environment variables are missing. Please set up Supabase connection.');
+  console.warn('Click "Connect to Supabase" button in the top right to configure your project.');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// إنشاء عميل Supabase مع معالجة الأخطاء
+export const supabase = supabaseUrl && supabaseAnonKey 
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null;
 
 // دوال مساعدة للمصادقة
 export const auth = {
   // تسجيل حساب جديد
   signUp: async (email, password, userData = {}) => {
+    if (!supabase) {
+      throw new Error('يجب إعداد Supabase أولاً. اضغط على زر "Connect to Supabase" في أعلى الصفحة.');
+    }
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -25,6 +33,9 @@ export const auth = {
 
   // تسجيل الدخول
   signIn: async (email, password) => {
+    if (!supabase) {
+      throw new Error('يجب إعداد Supabase أولاً. اضغط على زر "Connect to Supabase" في أعلى الصفحة.');
+    }
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password
@@ -34,6 +45,9 @@ export const auth = {
 
   // تسجيل الدخول بجوجل
   signInWithGoogle: async () => {
+    if (!supabase) {
+      throw new Error('يجب إعداد Supabase أولاً. اضغط على زر "Connect to Supabase" في أعلى الصفحة.');
+    }
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google'
     });
@@ -42,17 +56,26 @@ export const auth = {
 
   // تسجيل الخروج
   signOut: async () => {
+    if (!supabase) {
+      throw new Error('يجب إعداد Supabase أولاً. اضغط على زر "Connect to Supabase" في أعلى الصفحة.');
+    }
     const { error } = await supabase.auth.signOut();
     return { error };
   },
 
   // الحصول على المستخدم الحالي
   getCurrentUser: () => {
+    if (!supabase) {
+      return Promise.resolve({ data: { user: null }, error: null });
+    }
     return supabase.auth.getUser();
   },
 
   // الاستماع لتغييرات المصادقة
   onAuthStateChange: (callback) => {
+    if (!supabase) {
+      return { data: { subscription: { unsubscribe: () => {} } } };
+    }
     return supabase.auth.onAuthStateChange(callback);
   }
 };
@@ -61,6 +84,9 @@ export const auth = {
 export const profiles = {
   // إنشاء ملف شخصي
   create: async (profileData) => {
+    if (!supabase) {
+      throw new Error('يجب إعداد Supabase أولاً. اضغط على زر "Connect to Supabase" في أعلى الصفحة.');
+    }
     const { data, error } = await supabase
       .from('profiles')
       .insert([profileData])
@@ -71,6 +97,9 @@ export const profiles = {
 
   // الحصول على ملف شخصي
   get: async (userId) => {
+    if (!supabase) {
+      throw new Error('يجب إعداد Supabase أولاً. اضغط على زر "Connect to Supabase" في أعلى الصفحة.');
+    }
     const { data, error } = await supabase
       .from('profiles')
       .select('*')
@@ -81,6 +110,9 @@ export const profiles = {
 
   // تحديث ملف شخصي
   update: async (userId, updates) => {
+    if (!supabase) {
+      throw new Error('يجب إعداد Supabase أولاً. اضغط على زر "Connect to Supabase" في أعلى الصفحة.');
+    }
     const { data, error } = await supabase
       .from('profiles')
       .update(updates)

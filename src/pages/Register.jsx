@@ -64,15 +64,23 @@ const Register = () => {
       await signup(formData.email, formData.password, formData.name);
       navigate('/');
     } catch (error) {
-      // ترجم بعض أشهر رسائل الأخطاء
+      console.error('Registration error:', error);
+      
+      // معالجة رسائل الأخطاء
       let msg = 'حدث خطأ غير متوقع. حاول مرة أخرى.';
-      if (error.code === 'auth/email-already-in-use') {
+      
+      if (error.message && error.message.includes('Supabase')) {
+        msg = 'يجب إعداد Supabase أولاً. اضغط على زر "Connect to Supabase" في أعلى الصفحة.';
+      } else if (error.code === 'auth/email-already-in-use') {
         msg = 'البريد الإلكتروني مستخدم بالفعل.';
       } else if (error.code === 'auth/invalid-email') {
         msg = 'البريد الإلكتروني غير صالح.';
       } else if (error.code === 'auth/weak-password') {
         msg = 'كلمة المرور ضعيفة جداً.';
+      } else if (error.message) {
+        msg = error.message;
       }
+      
       setError(msg);
     }
     
