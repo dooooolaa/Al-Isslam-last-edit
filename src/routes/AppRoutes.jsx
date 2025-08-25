@@ -54,7 +54,6 @@ import TafsirQuests from '../challenges/TafsirQuests';
 import ChallengeHistory from '../challenges/ChallengeHistory';
 import IslamicQuiz from '../challenges/IslamicQuiz';
 import SectionsGrid from '../challenges/SectionsGrid';
-import Profile from '../pages/Profile';
 
 const AppRoutes = () => {
   return (
@@ -101,7 +100,7 @@ const AppRoutes = () => {
       <Route path="/family/parenting" element={<ParentingGuide />} />
       <Route path="/family/kids" element={<KidsContent />} />
       <Route path="/family/games" element={<InteractiveGames />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/profile" element={<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center"><h1 className="text-2xl font-bold text-gray-900 dark:text-white font-arabic">قريباً - الملف الشخصي</h1></div>} />
       <Route path="/favorites" element={<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center"><h1 className="text-2xl font-bold text-gray-900 dark:text-white font-arabic">قريباً - المفضلة</h1></div>} />
       <Route path="/settings" element={<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center"><h1 className="text-2xl font-bold text-gray-900 dark:text-white font-arabic">قريباً - الإعدادات</h1></div>} />
       <Route path="/faq" element={<Categories />} />

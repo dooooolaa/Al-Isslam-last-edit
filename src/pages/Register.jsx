@@ -64,23 +64,15 @@ const Register = () => {
       await signup(formData.email, formData.password, formData.name);
       navigate('/');
     } catch (error) {
-      console.error('Registration error:', error);
-      
-      // معالجة رسائل الأخطاء
+      // ترجم بعض أشهر رسائل الأخطاء
       let msg = 'حدث خطأ غير متوقع. حاول مرة أخرى.';
-      
-      if (error.message && error.message.includes('Supabase')) {
-        msg = 'يجب إعداد Supabase أولاً. اضغط على زر "Connect to Supabase" في أعلى الصفحة.';
-      } else if (error.code === 'auth/email-already-in-use') {
+      if (error.code === 'auth/email-already-in-use') {
         msg = 'البريد الإلكتروني مستخدم بالفعل.';
       } else if (error.code === 'auth/invalid-email') {
         msg = 'البريد الإلكتروني غير صالح.';
       } else if (error.code === 'auth/weak-password') {
         msg = 'كلمة المرور ضعيفة جداً.';
-      } else if (error.message) {
-        msg = error.message;
       }
-      
       setError(msg);
     }
     
@@ -250,11 +242,9 @@ const Register = () => {
                 required
                 className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
               />
-<label htmlFor="agree-terms" className="mr-2 rtl:ml-2 rtl:mr-0 block text-sm text-gray-700 dark:text-gray-300 font-arabic">
-  أوافق على 
-  <Link to="/terms" className="text-primary-600 hover:text-primary-500">شروط الاستخدام</Link> و 
-  <Link to="/privacy" className="text-primary-600 hover:text-primary-500">سياسة الخصوصية</Link>
-</label>
+              <label htmlFor="agree-terms" className="mr-2 rtl:ml-2 rtl:mr-0 block text-sm text-gray-700 dark:text-gray-300 font-arabic">
+                أوافق على <Link to="/terms" className="text-primary-600 hover:text-primary-500">شروط الاستخدام</Link> و <Link to="/privacy" className="text-primary-600 hover:text-primary-500">سياسة الخصوصية</Link>
+              </label>
             </div>
 
             <button

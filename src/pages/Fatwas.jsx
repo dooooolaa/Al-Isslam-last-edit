@@ -1,72 +1,42 @@
 import React, { useState } from 'react';
-import { useEffect } from 'react';
 import fuzzyIncludes from './fuzzy';
-import FavoriteButton from '../components/FavoriteButton';
-import { fatwas } from '../lib/supabase';
+// import FavoriteButton from '../components/FavoriteButton'; // فعلها عند توفر المكون
+
+const fatwasData = [
+  {
+    id: 1,
+    question: 'ما حكم الصلاة بدون وضوء؟',
+    answer: 'الصلاة بدون وضوء غير صحيحة ويجب الوضوء قبل كل صلاة مفروضة.',
+    category: 'الطهارة',
+    authority: 'اللجنة الدائمة',
+    date: '2022-01-01',
+    source: 'الإسلام سؤال وجواب'
+  },
+  {
+    id: 2,
+    question: 'هل يجوز الإفطار في رمضان للمريض؟',
+    answer: 'يجوز للمريض الذي يتضرر بالصوم أن يفطر ويقضي بعد شفائه.',
+    category: 'الصيام',
+    authority: 'الشيخ ابن باز',
+    date: '2021-05-10',
+    source: 'binbaz.org.sa'
+  },
+  // أضف المزيد من الفتاوى التجريبية هنا
+];
+
+const categories = [...new Set(fatwasData.map(f => f.category))];
+const authorities = [...new Set(fatwasData.map(f => f.authority))];
 
 const Fatwas = () => {
-  const [fatwasData, setFatwasData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
-  const [scholar, setScholar] = useState('');
+  const [authority, setAuthority] = useState('');
 
-  useEffect(() => {
-    fetchFatwas();
-  }, []);
-
-  const fetchFatwas = async () => {
-    try {
-      setLoading(true);
-      const { data, error } = await fatwas.getAll({
-        category: category || undefined,
-        search: search || undefined
-      });
-      
-      if (error) throw error;
-      
-      setFatwasData(data || []);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      fetchFatwas();
-    }, 500);
-
-    return () => clearTimeout(timeoutId);
-  }, [search, category, scholar]);
-
-  const categories = [...new Set(fatwasData.map(f => f.category))];
-  const scholars = [...new Set(fatwasData.map(f => f.scholar))];
   const filtered = fatwasData.filter(f =>
     (!search || fuzzyIncludes(f.question, search) || fuzzyIncludes(f.answer, search)) &&
     (!category || f.category === category) &&
-    (!scholar || f.scholar === scholar)
+    (!authority || f.authority === authority)
   );
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 flex items-center justify-center">
-        <div className="text-red-600 dark:text-red-400 text-center">
-          <p>حدث خطأ في تحميل الفتاوى: {error}</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8" dir="rtl">
@@ -84,9 +54,9 @@ const Fatwas = () => {
             <option value="">التصنيف الفقهي</option>
             {categories.map(c => <option key={c}>{c}</option>)}
           </select>
-          <select className="p-2 rounded border" value={scholar} onChange={e => setScholar(e.target.value)}>
+          <select className="p-2 rounded border" value={authority} onChange={e => setAuthority(e.target.value)}>
             <option value="">الجهة المصدرة</option>
-            {scholars.map(a => <option key={a}>{a}</option>)}
+            {authorities.map(a => <option key={a}>{a}</option>)}
           </select>
         </div>
         <div className="space-y-4">
@@ -94,11 +64,9 @@ const Fatwas = () => {
             <div key={fatwa.id} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow hover:shadow-lg transition-all text-right font-arabic">
               <div className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">{fatwa.question}</div>
               <div className="mb-2 text-gray-700 dark:text-gray-300">{fatwa.answer}</div>
-              <div className="mb-1 text-sm text-gray-700 dark:text-gray-300">التصنيف: {fatwa.category} | العالم: {fatwa.scholar}</div>
-              <div className="mb-1 text-sm text-gray-700 dark:text-gray-300">تاريخ النشر: {fatwa.date_issued} | المصدر: {fatwa.source}</div>
-              <div className="mt-3">
-                <FavoriteButton contentType="fatwa" contentId={fatwa.id} />
-              </div>
+              <div className="mb-1 text-sm text-gray-700 dark:text-gray-300">التصنيف: {fatwa.category} | الجهة: {fatwa.authority}</div>
+              <div className="mb-1 text-sm text-gray-700 dark:text-gray-300">تاريخ النشر: {fatwa.date} | المصدر: {fatwa.source}</div>
+              {/* <FavoriteButton itemId={fatwa.id} type="fatwa" /> */}
             </div>
           ))}
         </div>

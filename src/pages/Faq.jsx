@@ -1,109 +1,73 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+// import FavoriteButton from '../components/FavoriteButton'; // فعلها عند توفر المكون
+
+const faqData = [
+  {
+    id: 1,
+    question: 'ما هو تعريف الطهارة في الإسلام؟',
+    answer: 'الطهارة هي رفع الحدث وإزالة النجس، وهي شرط لصحة الصلاة.',
+    category: 'الطهارة',
+    source: 'إسلام ويب'
+  },
+  {
+    id: 2,
+    question: 'ما حكم من نسي ركعة في الصلاة؟',
+    answer: 'يجب عليه أن يأتي بالركعة التي نسيها ويسجد للسهو.',
+    category: 'الصلاة',
+    source: 'الإسلام سؤال وجواب'
+  },
+  // أضف المزيد من الأسئلة التجريبية هنا
+];
+
+const categories = [...new Set(faqData.map(f => f.category))];
 
 const Faq = () => {
-  const [faqs, setFaqs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState('');
+  const [expanded, setExpanded] = useState(null);
 
-  useEffect(() => {
-    // Load FAQ data
-    const loadFaqs = async () => {
-      try {
-        // This will be connected to Supabase later
-        setFaqs([
-          {
-            id: 1,
-            question: 'ما هي أركان الإسلام؟',
-            answer: 'أركان الإسلام خمسة: شهادة أن لا إله إلا الله وأن محمداً رسول الله، وإقام الصلاة، وإيتاء الزكاة، وصوم رمضان، وحج البيت من استطاع إليه سبيلاً.',
-            category: 'عقيدة'
-          },
-          {
-            id: 2,
-            question: 'كيف أتوضأ؟',
-            answer: 'الوضوء يبدأ بالنية، ثم غسل الكفين ثلاثاً، ثم المضمضة والاستنشاق ثلاثاً، ثم غسل الوجه ثلاثاً، ثم غسل اليدين إلى المرفقين ثلاثاً، ثم مسح الرأس، ثم غسل الرجلين إلى الكعبين ثلاثاً.',
-            category: 'عبادات'
-          }
-        ]);
-      } catch (error) {
-        console.error('Error loading FAQs:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadFaqs();
-  }, []);
-
-  const filteredFaqs = faqs.filter(faq =>
-    faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    faq.answer.toLowerCase().includes(searchTerm.toLowerCase())
+  const filtered = faqData.filter(f =>
+    (!search || f.question.includes(search) || f.answer.includes(search)) &&
+    (!category || f.category === category)
   );
 
-  if (loading) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gold-500"></div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gold-700 dark:text-gold-400 mb-8 text-center">
-          الأسئلة الشائعة
-        </h1>
-
-        <div className="mb-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8" dir="rtl">
+      <div className="max-w-3xl mx-auto px-4">
+        <h1 className="text-3xl font-bold mb-6 text-right text-gray-900 dark:text-white font-arabic">الأسئلة والأجوبة الشرعية</h1>
+        <div className="flex flex-col md:flex-row gap-2 mb-4">
           <input
-            type="text"
-            placeholder="ابحث في الأسئلة..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-transparent"
+            className="p-2 rounded border w-full md:w-1/2"
+            placeholder="ابحث في الأسئلة أو الأجوبة..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            dir="rtl"
           />
+          <select className="p-2 rounded border" value={category} onChange={e => setCategory(e.target.value)}>
+            <option value="">التصنيف</option>
+            {categories.map(c => <option key={c}>{c}</option>)}
+          </select>
         </div>
-
-        <div className="grid gap-6">
-          {filteredFaqs.map((faq) => (
-            <div key={faq.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-              <div className="flex items-start justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                  {faq.question}
-                </h3>
-                <span className="bg-gold-100 text-gold-800 px-2 py-1 rounded-full text-sm">
-                  {faq.category}
-                </span>
+        <div className="space-y-4">
+          {filtered.map(faq => (
+            <div key={faq.id} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow hover:shadow-lg transition-all text-right font-arabic cursor-pointer" onClick={() => setExpanded(expanded === faq.id ? null : faq.id)}>
+              <div className="flex justify-between items-center">
+                <div className="text-lg font-semibold text-gray-900 dark:text-white">{faq.question}</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">{faq.category}</div>
               </div>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                {faq.answer}
-              </p>
+              {expanded === faq.id && (
+                <div className="mt-2 text-gray-700 dark:text-gray-300">
+                  {faq.answer}
+                  <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">المصدر: {faq.source}</div>
+                </div>
+              )}
+              {/* <FavoriteButton itemId={faq.id} type="faq" /> */}
             </div>
           ))}
-        </div>
-
-        {filteredFaqs.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-500 dark:text-gray-400">
-              لم يتم العثور على أسئلة تطابق بحثك
-            </p>
-          </div>
-        )}
-
-        <div className="mt-12 text-center">
-          <Link
-            to="/faq/categories"
-            className="inline-block bg-gold-600 text-white px-6 py-3 rounded-lg hover:bg-gold-700 transition-colors"
-          >
-            تصفح جميع التصنيفات
-          </Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default Faq;
+export default Faq; 
