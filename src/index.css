@@ -434,3 +434,84 @@ body {
 .dark .quran-sidebar::-webkit-scrollbar-thumb:hover {
   background: #9ca3af;
 }
+
+/* Quran responsive improvements */
+@media (max-width: 640px) {
+  .quran-sidebar {
+    max-height: 50vh;
+  }
+  
+  .quran-main-content {
+    font-size: 0.875rem;
+  }
+  
+  .quran-ayah-text {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .quran-sidebar {
+    max-height: 60vh;
+  }
+  
+  .quran-main-content {
+    font-size: 1rem;
+  }
+  
+  .quran-ayah-text {
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+}
+
+@media (min-width: 1025px) {
+  .quran-sidebar {
+    max-height: none;
+  }
+  
+  .quran-main-content {
+    font-size: 1.125rem;
+  }
+  
+  .quran-ayah-text {
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+}
+
+/* Quran button improvements */
+.quran-button {
+  min-height: 44px;
+  min-width: 44px;
+  touch-action: manipulation;
+}
+
+.quran-button:active {
+  transform: scale(0.98);
+}
+
+/* Quran text improvements */
+.quran-text {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Quran spacing improvements */
+.quran-spacing {
+  padding: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .quran-spacing {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .quran-spacing {
+    padding: 1.5rem;
+  }
+}
