@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, BookOpen, Search, Play, Pause } from 'lucide-react';
+import { ChevronLeft, ChevronRight, BookOpen, Search, Play, Pause, Menu, X } from 'lucide-react';
 import fuzzyIncludes from './fuzzy';
 
 const RECITERS = [
@@ -30,6 +30,7 @@ const Quran = () => {
   const [isPaused, setIsPaused] = useState(false);
   const audioRef = useRef(null);
   const [viewMode, setViewMode] = useState('surahList');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     fetchSurahs();
@@ -175,6 +176,7 @@ const Quran = () => {
   const handleBackToSurahList = () => {
     setViewMode('surahList');
     setSelectedSurah(null);
+    setSidebarOpen(false);
     if (audio) {
       audio.pause();
       setIsPlaying(false);
@@ -182,10 +184,14 @@ const Quran = () => {
     }
   };
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-4 sm:py-6 lg:py-8 px-3 sm:px-4 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-4 sm:mb-6">
+        <div className="text-center mb-4 sm:mb-6 relative">
           <button
             onClick={handleBackToSurahList}
             className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white font-arabic mb-2 focus:outline-none focus:ring-0 bg-transparent border-none p-0 cursor-pointer"
@@ -195,6 +201,17 @@ const Quran = () => {
           <p className="text-sm text-gray-600 dark:text-gray-400 font-arabic">
             اقرأ وتدبر في كتاب الله عز وجل
           </p>
+          
+          {/* Sidebar Toggle Button - Only show when in surah display mode */}
+          {viewMode === 'surahDisplay' && (
+            <button
+              onClick={toggleSidebar}
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-primary-600 hover:bg-primary-700 text-white p-3 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 sidebar-toggle-btn"
+              aria-label="فتح القائمة"
+            >
+              <Menu size={20} />
+            </button>
+          )}
         </div>
 
         {viewMode === 'surahList' ? (
@@ -241,57 +258,89 @@ const Quran = () => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col xl:flex-row gap-4 xl:gap-6">
-            {/* Sidebar - Fixed on all screens */}
-            <div className="w-full xl:w-72 2xl:w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 sm:p-4 xl:sticky xl:top-20 xl:h-[calc(100vh-6rem)] xl:overflow-y-auto order-2 xl:order-1 max-h-[50vh] sm:max-h-[60vh] md:max-h-[70vh] xl:max-h-none overflow-y-auto quran-sidebar">
-              <button
-                onClick={handleBackToSurahList}
-                className="w-full text-center px-4 py-2 mb-4 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg transition-colors duration-200"
-              >
-                الرجوع للخلف
-              </button>
-              
-              <h2 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 font-arabic">قائمة السور</h2>
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 max-h-[160px] sm:max-h-[140px] overflow-y-auto mb-4 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-gray-100 dark:scrollbar-track-gray-800">
-                {surahs.map((surah) => (
+          <div className="relative">
+            {/* Sidebar Overlay for Mobile */}
+            {sidebarOpen && (
+              <div 
+                className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden quran-sidebar-overlay"
+                onClick={() => setSidebarOpen(false)}
+              />
+            )}
+            
+            {/* Sidebar */}
+            <div className={`fixed lg:static top-0 right-0 h-full w-80 bg-white dark:bg-gray-800 shadow-lg z-50 lg:z-auto transform transition-transform duration-300 ease-in-out quran-sidebar ${
+              sidebarOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'
+            } lg:block`}>
+              <div className="h-full flex flex-col">
+                {/* Sidebar Header */}
+                <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+                  <h2 className="text-lg font-bold text-gray-900 dark:text-white font-arabic">القائمة</h2>
                   <button
-                    key={surah.number}
-                    onClick={() => {
-                      fetchSurahDetails(surah.number);
-                      playSurah(surah.number);
-                    }}
-                    className={`px-2 py-1 rounded-full text-xs transition-colors duration-200 ${
-                      selectedSurah?.number === surah.number
-                        ? 'bg-primary-100 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400'
-                        : 'bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white'
-                    }`}
+                    onClick={() => setSidebarOpen(false)}
+                    className="lg:hidden p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
                   >
-                    {surah.name}
+                    <X size={20} />
                   </button>
-                ))}
-              </div>
+                </div>
+                
+                {/* Sidebar Content */}
+                <div className="flex-1 overflow-y-auto p-4 space-y-6">
+                  <button
+                    onClick={handleBackToSurahList}
+                    className="w-full text-center px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg transition-colors duration-200"
+                  >
+                    الرجوع للخلف
+                  </button>
+                  
+                  <div>
+                    <h2 className="text-base font-bold text-gray-900 dark:text-white mb-3 font-arabic">قائمة السور</h2>
+                    <div className="flex flex-wrap gap-1.5 max-h-[160px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-gray-100 dark:scrollbar-track-gray-800">
+                      {surahs.map((surah) => (
+                        <button
+                          key={surah.number}
+                          onClick={() => {
+                            fetchSurahDetails(surah.number);
+                            playSurah(surah.number);
+                            setSidebarOpen(false); // Close sidebar on mobile after selection
+                          }}
+                          className={`px-2 py-1 rounded-full text-xs transition-colors duration-200 ${
+                            selectedSurah?.number === surah.number
+                              ? 'bg-primary-100 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400'
+                              : 'bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white'
+                          }`}
+                        >
+                          {surah.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
-              <h2 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 font-arabic">القراء</h2>
-              <div className="space-y-1.5 max-h-[200px] sm:max-h-[250px] lg:max-h-[300px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-gray-100 dark:scrollbar-track-gray-800">
-                {RECITERS.map((reciter) => (
-                  <button
-                    key={reciter.id}
-                    onClick={() => {
-                      setSelectedReciter(reciter);
-                      if (selectedSurah) {
-                        playSurah(selectedSurah.number);
-                      }
-                    }}
-                    className={`w-full text-right p-2 rounded-lg transition-colors duration-200 ${
-                      selectedReciter?.id === reciter.id
-                        ? 'bg-primary-100 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400'
-                        : 'hover:bg-gray-100 dark:hover:bg-gray-700'
-                    }`}
-                  >
-                    <div className="font-arabic text-sm">{reciter.name}</div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400">{reciter.language}</div>
-                  </button>
-                ))}
+                  <div>
+                    <h2 className="text-base font-bold text-gray-900 dark:text-white mb-3 font-arabic">القراء</h2>
+                    <div className="space-y-1.5 max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-gray-100 dark:scrollbar-track-gray-800">
+                      {RECITERS.map((reciter) => (
+                        <button
+                          key={reciter.id}
+                          onClick={() => {
+                            setSelectedReciter(reciter);
+                            if (selectedSurah) {
+                              playSurah(selectedSurah.number);
+                            }
+                            setSidebarOpen(false); // Close sidebar on mobile after selection
+                          }}
+                          className={`w-full text-right p-2 rounded-lg transition-colors duration-200 ${
+                            selectedReciter?.id === reciter.id
+                              ? 'bg-primary-100 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400'
+                              : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                          }`}
+                        >
+                          <div className="font-arabic text-sm">{reciter.name}</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400">{reciter.language}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
