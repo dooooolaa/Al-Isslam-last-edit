@@ -55,17 +55,17 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-lg sticky top-0 z-50 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+        <div className="flex justify-between h-14 sm:h-16 items-center">
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <img src="/logo.png" alt="شعار الإسلام حياة" className="w-32 h-20 object-contain" />
+              <img src="/logo.png" alt="شعار الإسلام حياة" className="w-24 h-12 sm:w-32 sm:h-20 object-contain" />
             </Link>
           </div>
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8 rtl:space-x-reverse">
-            {navigation.map((item) => {
+          <div className="hidden lg:flex items-center space-x-6 rtl:space-x-reverse">
+            {navigation.slice(0, 6).map((item) => {
               const Icon = item.icon;
               return (
                 <Link
@@ -77,8 +77,8 @@ const Navbar = () => {
                       : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800'
                   }`}
                 >
-                  <Icon size={18} />
-                  <span className="font-arabic">{item.name}</span>
+                  <Icon size={16} />
+                  <span className="font-arabic hidden xl:block">{item.name}</span>
                 </Link>
               );
             })}
@@ -167,9 +167,10 @@ const Navbar = () => {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+              className="lg:hidden p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 min-h-[44px] min-w-[44px] flex items-center justify-center"
+              aria-label="فتح القائمة"
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
@@ -177,15 +178,15 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
-          <div className="px-2 pt-2 pb-3 space-y-1">
+        <div className="lg:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 max-h-[70vh] overflow-y-auto">
+          <div className="px-3 pt-3 pb-4 space-y-1">
             {navigation.map((item) => {
               const Icon = item.icon;
               return (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`flex items-center space-x-2 rtl:space-x-reverse px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
+                  className={`flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 min-h-[48px] ${
                     location.pathname === item.href
                       ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
                       : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800'
