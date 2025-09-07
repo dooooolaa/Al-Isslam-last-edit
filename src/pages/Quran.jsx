@@ -202,15 +202,14 @@ const Quran = () => {
             اقرأ وتدبر في كتاب الله عز وجل
           </p>
           
-          {/* Sidebar Toggle Button - Only show when in surah display mode */}
+          {/* Sidebar Toggle Button - Only show on mobile and tablet */}
           {viewMode === 'surahDisplay' && (
             <button
               onClick={toggleSidebar}
-              className="fixed top-20 right-4 z-50 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 sidebar-toggle-btn flex items-center space-x-2 rtl:space-x-reverse lg:hidden"
+              className="fixed top-20 right-4 z-50 bg-primary-600 hover:bg-primary-700 text-white p-3 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 sidebar-toggle-btn lg:hidden"
               aria-label="فتح القائمة"
             >
-              <Menu size={18} />
-              <span className="font-arabic text-sm">القائمة</span>
+              <Menu size={20} />
             </button>
           )}
         </div>
@@ -259,7 +258,7 @@ const Quran = () => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col lg:flex-row gap-6">
+          <div className="relative lg:flex lg:gap-6">
             {/* Sidebar Overlay for Mobile */}
             {sidebarOpen && (
               <div 
@@ -346,24 +345,24 @@ const Quran = () => {
             </div>
 
             {/* Main Content - Surah Display */}
-            <div className="flex-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 sm:p-6 lg:p-8 quran-main-content quran-spacing">
-              <div className="text-center mb-6 sm:mb-8">
-                <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white font-arabic mb-3">
+            <div className="flex-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 sm:p-4 lg:p-6 quran-main-content quran-spacing">
+              <div className="text-center mb-4 sm:mb-6">
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white font-arabic mb-2">
                   {selectedSurah?.name}
                 </h2>
-                <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                   {selectedSurah?.englishName} - {selectedSurah?.numberOfAyahs} آية
                 </p>
                 {selectedReciter && (
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
                     القارئ: {selectedReciter.name}
                   </p>
                 )}
                 
-                <div className="mt-6 space-y-3">
+                <div className="mt-4 space-y-2">
                   <button
                     onClick={togglePlayPause}
-                    className={`px-6 sm:px-8 py-3 rounded-full transition-colors duration-200 text-base sm:text-lg quran-button ${
+                    className={`px-4 sm:px-6 py-2 rounded-full transition-colors duration-200 text-sm sm:text-base quran-button ${
                       isPlaying
                         ? 'bg-red-600 hover:bg-red-700 text-white'
                         : 'bg-primary-600 hover:bg-primary-700 text-white'
@@ -371,44 +370,44 @@ const Quran = () => {
                   >
                     {isPlaying ? (
                       <span className="flex items-center justify-center">
-                        <Pause className="ml-2" size={20} className="sm:w-6 sm:h-6" />
+                        <Pause className="ml-2" size={16} className="sm:w-5 sm:h-5" />
                         {isPaused ? 'استئناف' : 'إيقاف مؤقت'}
                       </span>
                     ) : (
                       <span className="flex items-center justify-center">
-                        <Play className="ml-2" size={20} className="sm:w-6 sm:h-6" />
+                        <Play className="ml-2" size={16} className="sm:w-5 sm:h-5" />
                         تشغيل السورة
                       </span>
                     )}
                   </button>
 
                   {/* Progress Bar */}
-                  <div className="flex items-center space-x-3 sm:space-x-4 mt-6">
-                    <span className="text-sm sm:text-base text-gray-500 dark:text-gray-400 font-mono">{formatTime(currentTime)}</span>
+                  <div className="flex items-center space-x-2 sm:space-x-4 mt-4">
+                    <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{formatTime(currentTime)}</span>
                     <input
                       type="range"
                       min="0"
                       max={duration}
                       value={currentTime}
                       onChange={handleSliderChange}
-                      className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                       style={{
                         background: `linear-gradient(to left, #2563EB 0%, #2563EB ${progressPercentage}%, #4B5563 ${progressPercentage}%, #4B5563 100%)`,
                       }}
                     />
-                    <span className="text-sm sm:text-base text-gray-500 dark:text-gray-400 font-mono">{formatTime(duration)}</span>
+                    <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{formatTime(duration)}</span>
                   </div>
                 </div>
               </div>
               
-              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 sm:p-6 lg:p-8">
-                <div className="space-y-6 sm:space-y-8">
+              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 sm:p-4 lg:p-6">
+                <div className="space-y-4 sm:space-y-6">
                   {selectedSurah?.ayahs.map((ayah) => (
                     <span key={ayah.numberInSurah} className="relative group inline">
-                      <span className="text-lg sm:text-xl lg:text-2xl font-arabic text-gray-900 dark:text-white leading-loose mr-3 quran-ayah-text quran-text">
+                      <span className="text-base sm:text-lg lg:text-xl font-arabic text-gray-900 dark:text-white leading-relaxed mr-2 quran-ayah-text quran-text">
                         {ayah.text}
                       </span>
-                      <span className="inline-flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 text-sm mx-2 rounded-full bg-gray-700 text-yellow-400 font-sans dark:bg-gray-600">
+                      <span className="inline-flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 text-xs mx-1 rounded-full bg-gray-700 text-yellow-400 font-sans dark:bg-gray-600">
                         {convertToEasternArabicNumerals(ayah.numberInSurah)}
                       </span>
                     </span>
