@@ -206,7 +206,7 @@ const Quran = () => {
           {viewMode === 'surahDisplay' && (
             <button
               onClick={toggleSidebar}
-              className="fixed top-20 right-20 z-50 bg-primary-600 hover:bg-primary-700 text-white p-3 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 sidebar-toggle-btn lg:hidden"
+              className="fixed top-10 right-20 z-50 bg-primary-600 hover:bg-primary-700 text-white p-3 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 sidebar-toggle-btn lg:hidden"
               aria-label="فتح القائمة"
             >
               <Menu size={20} />
